@@ -1,0 +1,27 @@
+{
+  "name": "goinstant-webrtc",
+  "main": "dist/webrtc.js",
+  "version": "1.0.0",
+  "homepage": "https://github.com/goinstant/webrtc",
+  "authors": [
+    "GoInstant",
+    "a salesforce.com company"
+  ],
+
+  "description": "The GoInstant Web RTC widget provides a drop-in, back-end free, video conferencing solution.",
+  "keywords": [
+    "GoInstant",
+    "widget",
+    "webrtc"
+  ],
+
+  "license": "BSD",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}
+

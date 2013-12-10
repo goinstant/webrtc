@@ -1,0 +1,10 @@
+components
+node_modules
+config/config.js
+build
+
+*.swp
+*.swo
+*.swn
+
+.DS_Store
