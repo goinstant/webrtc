@@ -1,20 +1,23 @@
 {
   "name": "webrtc",
-  "version": "1.0.0",
+  "version": "0.1.0",
   "description": "The GoInstant Web RTC widget provides a drop-in, back-end free, video conferencing solution.",
   "main": "Gruntfile.js",
   "scripts": {
     "test": "grunt test"
   },
+
   "repository": {
     "type": "git",
     "url": "git://github.com/goinstant/webrtc.git"
   },
+
   "author": "",
   "readmeFilename": "README.md",
   "bugs": {
     "url": "https://github.com/goinstant/webrtc/issues"
   },
+
   "devDependencies": {
     "browsers-yaml": "git://github.com/goinstant/browsers-yaml.git",
     "js-yaml": "2.1.3",
@@ -34,6 +37,7 @@
     "underscore.string": "2.3.3",
     "widget-examples": "git://github.com/goinstant/widget-examples.git"
   },
+
   "goinstant": {
     "namespace": "widgets"
   }

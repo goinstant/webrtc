@@ -3,5 +3,85 @@
    ========================================================================== */
 
 .gi-webrtc {
+  display: block;
+  margin: 0 auto;
+  position: absolute;
+  bottom: 0px;
+}
 
+.gi-webrtc .gi-list-wrapper {
+
+}
+
+.gi-webrtc .gi-list {
+  list-style-type: none;
+  text-align: center;
+}
+
+.gi-webrtc .gi-user {
+  display: inline-block;
+  margin-left: 5px;
+  padding: 5px;
+  float: left;
+  background-color: #E6E6E6;
+}
+
+.gi-webrtc .gi-user.gi-local {
+  background-color: #999999;
+}
+
+.gi-webrtc .gi-user .gi-stream {
+  display: block;
+  width: 100%;
+  height: 100px;
+  background-color: #cccccc;
+}
+
+.gi-webrtc .gi-user .gi-stream .gi-mute {
+  padding: 5px;
+  width: 15px;
+  height: 15px;
+  background-color: #aaaaaa;
+  position: absolute;
+  z-index: 10;
+}
+
+.gi-webrtc .gi-user .gi-stream .gi-mute span {
+  display: block;
+  width: 15px;
+  height: 15px;
+  background-color: #ccc;
+}
+
+.gi-webrtc .gi-user .gi-stream .gi-mute.gi-muted span {
+  background-color: #ff0000;
+}
+
+.gi-webrtc .gi-user .gi-color {
+  display: inline-block;
+  width: 25px;
+  height: 25px;
+  vertical-align: top;
+  margin-top: 5px;
+}
+
+.gi-webrtc .gi-user .gi-name {
+  display: inline-block;
+  min-width: 100px;
+  font-size: 14px;
+  vertical-align: top;
+  text-align: left;
+  margin: 5px 0 0 5px;
+  padding: 4px 0 4px 0;
+}
+
+.gi-webrtc .gi-user .gi-audio {
+  display: inline-block;
+  width: 25px;
+  height: 25px;
+  background-color: #aaaaaa;
+}
+
+.gi-webrtc .gi-user .gi-audio.gi-speaking {
+  background-color: #ffffff;
 }

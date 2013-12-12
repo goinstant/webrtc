@@ -43,6 +43,7 @@
         });
 
         var webRTC = new WebRTC(options);
+        window.webrtc = webRTC;
 
         webRTC.initialize(function(err) {
           if (err) {

@@ -2,7 +2,7 @@
   "name": "webrtc",
   "repo": "goinstant/webrtc",
   "description": "The GoInstant Web RTC widget provides a drop-in, back-end free, video conferencing solution.",
-  "version": "1.0.0",
+  "version": "0.1.0",
   "keywords": [
     "GoInstant",
     "widget",
@@ -10,7 +10,13 @@
   ],
 
   "dependencies": {
-    "lodash/lodash": "2.3.0"
+    "lodash/lodash": "2.3.0",
+    "stagas/binder": "0.0.1",
+    "component/emitter": "1.1.0",
+    "component/classes": "1.1.4",
+    "caolan/async": "f01b3992fbe7aa2f4881152143608ad666aea1cc",
+    "goinstant/usercache": "v1.0.0",
+    "goinstant/colors-common": "v1.0.0"
   },
 
   "development": {
@@ -20,15 +26,26 @@
 
   "license": "BSD",
 
+  "paths": [
+    "../"
+  ],
+
+  "local": [
+    "gortc"
+  ],
+
   "main": "index.js",
 
   "scripts": [
     "index.js",
-    "lib/webrtc.js"
+    "lib/errors.js",
+    "lib/webrtc.js",
+    "lib/view.js"
   ],
 
   "templates": [
-    "templates/template.html"
+    "templates/list-template.html",
+    "templates/user-template.html"
   ],
 
   "styles": [
