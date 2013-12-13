@@ -32,7 +32,8 @@
         var UserColors = window.goinstant.widgets.UserColors;
 
         var options = {
-          room: room
+          room: room,
+          expandContainer: $('.myContainer')[0]
         };
 
         var userColors = new UserColors({ room: room });
@@ -77,5 +78,7 @@
         <li>The WebRTC widget should ...</li>
       </ul>
     </div>
+
+    <ul class="myContainer"></ul>
   </body>
 </html>

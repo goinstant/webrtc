@@ -57,14 +57,27 @@
   background-color: #999999;
 }
 
+.gi-webrtc .gi-user .gi-stream-wrapper .gi-overlay {
+  background-color: #333333;
+  padding: 3px;
+  position: absolute;
+  z-index: 10;
+  display: none;
+}
+
+.gi-webrtc .gi-user .gi-stream-wrapper .gi-expand {
+  width: 15px;
+  height: 15px;
+  background-color: #cccccc;
+  padding: 5px;
+}
+
 /* Stream stopped */
 .gi-webrtc .gi-user .gi-stream-wrapper .gi-toggle {
   width: 15px;
   height: 15px;
   background-color: #cccccc;
   padding: 5px;
-  position: absolute;
-  z-index: 10;
 }
 
 /* Stream started */
