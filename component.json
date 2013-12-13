@@ -39,6 +39,7 @@
   "scripts": [
     "index.js",
     "lib/errors.js",
+    "lib/compatible.js",
     "lib/webrtc.js",
     "lib/view.js"
   ],
