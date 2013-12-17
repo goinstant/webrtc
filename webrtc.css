@@ -117,7 +117,8 @@
 
       /* User stream options */
       .gi-webrtc .gi-user .gi-stream-wrapper .gi-overlay {
-        display: none;
+        opacity: 0;
+        visibility: hidden;
         position: absolute;
         margin: 6px;
         z-index: 1;
@@ -125,12 +126,26 @@
         background: rgba(0,0,0,.7);
         border-radius: 3px;
         box-shadow: 0 1px 2px rgba(0,0,0,.2);
+        transition: all .1s linear;
       }
+
+        /* Show Overlay */
+        .gi-webrtc .gi-user:hover .gi-overlay {
+          opacity: 1;
+          visibility: visible;
+        }
 
         /* Options icons */
         .gi-webrtc .gi-overlay > div {
           padding: 0 6px 6px;
+          opacity: .8;
+          cursor: pointer;
+          transition: opacity .1s linear;
         }
+
+          .gi-webrtc .gi-overlay > div:hover {
+            opacity: 1;
+          }
 
         .gi-webrtc .gi-overlay .gi-icon {
           display: block;
@@ -238,12 +253,18 @@
     cursor: pointer;
   }
 
+  .gi-webrtc .gi-collapse:hover .gi-icon {
+    opacity: 1;
+  }
+
     .gi-webrtc .gi-collapse .gi-icon {
       background-position: -68px -7px;
       width: 29px;
+      opacity: .8;
+      transition: opacity .1s linear;
     }
 
-      .gi-webrtc .gi-collapse.collapsed .gi-icon {
+      .gi-webrtc.gi-collapsed .gi-collapse .gi-icon {
         background-position: -31px -7px;
       }
 
@@ -257,13 +278,12 @@
   height: 16px;
   background-image: url('images/sprite.png');
   background-repeat: no-repeat;
-  background: teal;
 }
 
 @media print, (-webkit-min-device-pixel-ratio: 1.25), (min-resolution: 120dpi) {
   .gi-webrtc .gi-icon {
     background-image: url('images/sprite@2x.png');
-    background-size: 140px 52px;
+    background-size: 159px 80px;
   }
 }
 
@@ -271,15 +291,41 @@
 .gi-webrtc .gi-user .gi-stream-wrapper.gi-streaming .gi-toggle {
   background-color: #ff0000;
 }
-
-  /* Speaking */
-  .gi-webrtc .gi-audio.gi-speaking .gi-icon {
-    background-color: #ffff00;
+  
+  /* Audio */
+  .gi-webrtc .gi-audio .gi-icon {
+    height: 17px;
+    background-position: 10px 10px;
   }
 
-  /* Muted */
-  .gi-webrtc .gi-audio.gi-muted .gi-icon {
-    background-color: #ff0000;
+    /* Speaking */
+    .gi-webrtc .gi-audio.gi-speaking .gi-icon {
+      background-position: -6px -31px;
+    }
+
+    /* Muted */
+    .gi-webrtc .gi-audio.gi-muted .gi-icon {
+      background-position: -35px -31px;
+    }
+
+  /* Expand */
+  .gi-webrtc .gi-expand .gi-icon {
+    background-position: -71px -30px;
+  }
+
+  /* Reverse Expand */
+  .gi-webrtc.gi-expand-container .gi-expand .gi-icon {
+    background-position: -106px -30px;
+  }
+
+  /* Toggle Stream - Pause */
+  .gi-webrtc .gi-toggle .gi-icon {
+    background-position: -6px -57px;
+  }
+
+  /* Toggle Stream - Resume */
+  .gi-webrtc .gi-toggle .gi-icon {
+    /*background-position: -36px -57px;*/
   }
 
 

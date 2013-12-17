@@ -55,6 +55,8 @@
   ],
 
   "images": [
-    "images/transparent.png"
+    "images/transparent.png",
+    "images/sprite.png",
+    "images/sprite@2x.png"
   ]
 }
