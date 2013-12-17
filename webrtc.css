@@ -146,3 +146,8 @@
 .gi-webrtc .gi-audio.gi-muted .gi-icon {
   background-color: #ff0000;
 }
+
+.gi-webrtc.gi-expand-container .gi-stream-wrapper {
+  max-width: 100%;
+  max-height: 100%;
+}
