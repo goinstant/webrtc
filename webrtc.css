@@ -223,6 +223,14 @@
   height: 16px;
 }
 
+/* 
+   Expanded Presenter Container   
+   ========================================================================== */
+
+.gi-webrtc.gi-expand-container .gi-stream-wrapper {
+  max-width: 100%;
+  max-height: 100%;
+}
 
 /*
    Collapse Toggle
@@ -287,11 +295,6 @@
   }
 }
 
-/* Stream started */
-.gi-webrtc .gi-user .gi-stream-wrapper.gi-streaming .gi-toggle {
-  background-color: #ff0000;
-}
-  
   /* Audio */
   .gi-webrtc .gi-audio .gi-icon {
     height: 17px;
@@ -319,13 +322,13 @@
   }
 
   /* Toggle Stream - Pause */
-  .gi-webrtc .gi-toggle .gi-icon {
+  .gi-webrtc .gi-stream-wrapper.gi-streaming .gi-toggle .gi-icon {
     background-position: -6px -57px;
   }
 
   /* Toggle Stream - Resume */
   .gi-webrtc .gi-toggle .gi-icon {
-    /*background-position: -36px -57px;*/
+    background-position: -36px -57px;
   }
 
 
