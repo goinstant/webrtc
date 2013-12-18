@@ -57,6 +57,7 @@
   "images": [
     "images/transparent.png",
     "images/sprite.png",
-    "images/sprite@2x.png"
+    "images/sprite@2x.png",
+    "images/user.png"
   ]
 }

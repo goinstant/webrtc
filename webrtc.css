@@ -23,7 +23,7 @@
 
     /* Collapsed */
     .gi-webrtc.gi-collapsed {
-      bottom: -180px;
+      bottom: -182px;
     }
 
 /*
@@ -106,9 +106,22 @@
     width: 170px;
     height: 127px;
     overflow: hidden;
-    background: #ccc;
+    background-color: #ddd;
+    background-image: url('images/user.png');
+    background-repeat: no-repeat;
+    background-position: 40% center;
+    border: 1px solid #CCC;
     border-radius: 3px 3px 0 0;
   }
+
+    .gi-webrtc .gi-user.gi-streaming .gi-stream-wrapper {
+      border: 0;
+    }
+
+    .gi-webrtc .gi-user.gi-local .gi-stream-wrapper {
+      background-image: none;
+    }
+
 
     /* Stream object */
     .gi-webrtc .gi-user .gi-stream {
@@ -134,11 +147,12 @@
         transition: all .1s linear;
       }
 
-        /* Show Overlay */
-        .gi-webrtc .gi-user:hover .gi-overlay {
+        /* Show overlay tools when user is streaming */
+        .gi-webrtc .gi-user.gi-streaming:hover .gi-overlay {
           opacity: 1;
           visibility: visible;
         }
+
 
         /* Options icons */
         .gi-webrtc .gi-overlay > div {
@@ -334,6 +348,11 @@
   /* Toggle Stream - Resume */
   .gi-webrtc .gi-toggle .gi-icon {
     background-position: -36px -57px;
+  }
+
+  /* Leave Session */
+  .gi-webrtc .gi-leave .gi-icon {
+    background-position: -71px -56px;
   }
 
 
