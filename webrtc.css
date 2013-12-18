@@ -153,7 +153,6 @@
           visibility: visible;
         }
 
-
         /* Options icons */
         .gi-webrtc .gi-overlay > div {
           padding: 0 6px 6px;
@@ -173,7 +172,6 @@
           .gi-webrtc .gi-overlay > div:first-child {
             padding: 6px;
           }
-
 
 /* Avatar */
 .gi-webrtc .gi-avatar {
@@ -241,6 +239,63 @@
   width: 16px;
   height: 16px;
 }
+
+/* 
+   Join Screen
+   ========================================================================== */
+
+.gi-webrtc .gi-join {
+  display: block;
+  margin: 25% auto 0;
+  padding: 0 9px 0 0;
+  line-height: 1;
+  background: #50565C;
+  border: 0;
+  border-radius: 3px;
+  text-align: center;
+  font-size: 13px;
+  font-family: sans-serif;
+  color: #fff;
+  cursor: pointer;
+  -webkit-appearance: none;
+  -webkit-font-smoothing: antialiased;
+  box-shadow: 0 1px 2px rgba(0,0,0,.2);
+}
+
+  .gi-webrtc .gi-join:hover {
+    background: #5F6870;
+    text-decoration: none;
+  }
+
+  .gi-webrtc .gi-join:active {
+    background: #50565C;
+    outline: none;
+    box-shadow: 0 1px 2px rgba(0,0,0,0);
+  }
+  
+  .gi-webrtc .gi-join > span {
+    display: inline-block;
+    margin-right: 5px;
+    padding: 8px 7px 12px;
+    background: #262D35;
+  }
+
+    .gi-webrtc .gi-join:hover > span {
+      background: #414953;
+    }
+    .gi-webrtc .gi-join:active > span {
+      background: #262D35;
+    }
+
+    .gi-webrtc .gi-join .gi-icon {
+      position: relative;
+      top: 1px;
+      width: 23px;
+      background-position: -105px -55px;
+    }
+
+}
+
 
 /* 
    Expanded Presenter Container   
