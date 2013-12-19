@@ -164,6 +164,7 @@
         visibility: hidden;
         position: absolute;
         margin: 6px;
+        padding: 6px 0 1px;
         z-index: 1;
         background: url('images/transparent.png');
         background: rgba(0,0,0,.7);
@@ -193,10 +194,6 @@
         .gi-webrtc .gi-overlay .gi-icon {
           display: block;
         }
-
-          .gi-webrtc .gi-overlay > div:first-child {
-            padding: 6px;
-          }
 
 /* Avatar */
 .gi-webrtc .gi-avatar {
