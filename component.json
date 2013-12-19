@@ -61,6 +61,8 @@
     "images/transparent.png",
     "images/sprite.png",
     "images/sprite@2x.png",
-    "images/user.png"
+    "images/user.png",
+    "images/user-audio.png",
+    "images/user-paused.png"
   ]
 }

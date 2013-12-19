@@ -115,7 +115,7 @@
     border-radius: 3px 3px 0 0;
   }
 
-    .gi-webrtc .gi-user.gi-streaming .gi-stream-wrapper {
+    .gi-webrtc .gi-user.gi-streaming:not(.gi-streaming-audio) .gi-stream-wrapper {
       border: 0;
     }
 
@@ -123,7 +123,31 @@
       background-image: none;
     }
 
+    /* Audio Only Avatar */
+    .gi-webrtc .gi-user.gi-streaming-audio .gi-stream-wrapper {
+      background-image: url('images/user-audio.png');
+    }
 
+    /* Audio Only stream is hidden */
+    .gi-webrtc .gi-user.gi-streaming-audio .gi-stream {
+      visibility: hidden;
+    }
+
+    /* Paused User */
+    .gi-webrtc .gi-user.gi-paused .gi-stream-wrapper {
+      background-image: url('images/user-paused.png');
+    }
+    .gi-webrtc .gi-user.gi-local.gi-paused .gi-stream-wrapper {
+      background: #222;
+    }
+    .gi-webrtc .gi-user.gi-local.gi-paused .gi-stream {
+      visibility: visible;
+      opacity: .5;
+    }
+    .gi-webrtc .gi-user.gi-paused .gi-stream {
+      visibility: hidden;
+    }
+ 
     /* Stream object */
     .gi-webrtc .gi-user .gi-stream {
       width: 100%;
@@ -408,7 +432,7 @@
   }
 
   /* Toggle Stream - Resume */
-  .gi-webrtc .gi-user .gi-pause .gi-icon {
+  .gi-webrtc .gi-user.gi-paused .gi-pause .gi-icon {
     background-position: -36px -57px;
   }
 
