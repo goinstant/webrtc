@@ -47,7 +47,8 @@
 
   "templates": [
     "templates/list-template.html",
-    "templates/user-template.html"
+    "templates/user-template.html",
+    "templates/local-user-template.html"
   ],
 
   "styles": [

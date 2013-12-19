@@ -2,7 +2,8 @@
    GoInstant Form Widget Styles
    ========================================================================== */
 
-.gi-webrtc .gi-collapse {
+.gi-webrtc .gi-collapse,
+.gi-webrtc .gi-join {
   width: 15px;
   height: 15px;
   background-color: #cccccc;
