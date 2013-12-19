@@ -40,8 +40,10 @@
   "scripts": [
     "index.js",
     "lib/errors.js",
+    "lib/common.js",
     "lib/compatible.js",
     "lib/webrtc.js",
+    "lib/controller.js",
     "lib/view.js"
   ],
 
