@@ -274,6 +274,10 @@
     box-shadow: 0 1px 2px rgba(0,0,0,0);
   }
 
+  .gi-webrtc .gi-join:focus {
+    outline: none;
+  }
+  
   .gi-webrtc .gi-join > span {
     display: inline-block;
     margin-right: 5px;
@@ -295,7 +299,9 @@
       background-position: -105px -55px;
     }
 
-}
+      .gi-webrtc .gi-user.gi-streaming .gi-join {
+        display: none;
+      }
 
 
 /*
@@ -397,12 +403,12 @@
   }
 
   /* Toggle Stream - Pause */
-  .gi-webrtc .gi-stream-wrapper.gi-streaming .gi-toggle .gi-icon {
+  .gi-webrtc .gi-user.gi-streaming .gi-pause .gi-icon {
     background-position: -6px -57px;
   }
 
   /* Toggle Stream - Resume */
-  .gi-webrtc .gi-toggle .gi-icon {
+  .gi-webrtc .gi-user .gi-pause .gi-icon {
     background-position: -36px -57px;
   }
 
