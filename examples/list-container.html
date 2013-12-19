@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>GoInstant: WebRTC Example: defaults</title>
+    <title>GoInstant: WebRTC Example: list Container</title>
 
     <script src="https://cdn.goinstant.net/v1/platform.min.js"></script>
     <script src="https://cdn.goinstant.net/widgets/user-colors/latest/user-colors.min.js"></script>
@@ -22,11 +22,10 @@
     <script src="../build/build.js"></script>
     <style>
       .myContainer {
-        width: 400px;
-        height: 400px;
         position: absolute;
-        top: 70px;
-        right: 0px;
+        width: 100%;
+        bottom: 200px;
+        left: 0px;
       }
     </style>
   </head>
@@ -41,7 +40,8 @@
         var UserColors = window.goinstant.widgets.UserColors;
 
         var options = {
-          room: room
+          room: room,
+          listContainer: $('.myContainer')[0]
         };
 
         var userColors = new UserColors({ room: room });
@@ -66,7 +66,7 @@
 
         var config = {
           name: 'WebRTC',
-          desc: 'default options',
+          desc: 'listContainer option',
           test: widgetTest
         };
 
@@ -86,5 +86,7 @@
         <li>The WebRTC widget should ...</li>
       </ul>
     </div>
+
+    <div class="myContainer"></div>
   </body>
 </html>
