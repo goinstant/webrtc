@@ -10,7 +10,7 @@ var CLEAN_DIRS = [
   'build'
 ];
 
-var BROWSERS = require('./node_modules/browsers-yaml/browsers');
+var BROWSERS = require('./browsers');
 
 var ASSET_HOST = process.env.ASSET_HOST;
 

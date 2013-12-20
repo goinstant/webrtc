@@ -11,17 +11,28 @@ describe('WebRTC', function() {
 
   var _ = window._;
 
+  var webRTC;
+
+  var sandbox;
+
+  before(function() {
+    sandbox = sinon.sandbox.create();
+  });
+
+  afterEach(function() {
+    sandbox.restore();
+  });
+
+  beforeEach(function(done) {
+    webRTC = new WebRTC();
+    webRTC.initialize(done);
+  });
+
+  afterEach(function(done) {
+    webRTC.destroy(done);
+  });
+
   describe('Constructor', function() {
-    var webRTC;
-
-    beforeEach(function(done) {
-      webRTC = new WebRTC();
-      webRTC.initialize(done);
-    });
-
-    afterEach(function(done) {
-      webRTC.destroy(done);
-    });
 
     it('creates a new instance of the WebRTC widget', function() {
       assert(webRTC instanceof WebRTC);
