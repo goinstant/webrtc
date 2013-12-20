@@ -4,14 +4,13 @@
 describe('WebRTC', function() {
   "use strict";
 
-  var WebRTC = require('webrtc');
-
   var assert = window.assert;
   var sinon = window.sinon;
 
-  var _ = window._;
+  var _ = require('lodash');
+  var $ = require('jquery');
 
-  var webRTC;
+  var WebRTC = require('webrtc');
 
   var sandbox;
 
@@ -23,19 +22,197 @@ describe('WebRTC', function() {
     sandbox.restore();
   });
 
-  beforeEach(function(done) {
-    webRTC = new WebRTC();
-    webRTC.initialize(done);
-  });
+  var testWebrtc;
 
-  afterEach(function(done) {
-    webRTC.destroy(done);
+  var fakeRoom;
+
+  var FakeUserCache;
+  var FakeGoRTC;
+  var FakeView;
+  var FakeController;
+
+  function createFakeKey(name) {
+    return {
+      name: name,
+      get: sinon.stub().yields(),
+      set: sinon.stub(),
+      key: createFakeKey,
+      remove: sinon.stub().yields(),
+      on: sinon.stub(),
+      off: sinon.stub()
+    };
+  }
+
+  beforeEach(function() {
+    fakeRoom = {
+      key: createFakeKey,
+      self: createFakeKey
+    };
+
+    FakeUserCache = sandbox.stub().returns({
+      initialize: sandbox.stub().yields(),
+      destroy: sandbox.stub().yields(),
+      getLocalUser: sandbox.stub(),
+      on: sandbox.stub(),
+      off: sandbox.stub()
+    });
+
+    FakeGoRTC = sandbox.stub().returns({
+      on: sandbox.stub(),
+      off: sandbox.stub()
+    });
+
+    FakeView = sandbox.stub().returns({
+      initialize: sandbox.stub(),
+      destroy: sandbox.stub(),
+      toggleCollapse: sandbox.stub().yields(),
+      addUser: sandbox.stub(),
+      removeUser: sandbox.stub(),
+      updateUser: sandbox.stub(),
+
+      list: document.createElement('ul'),
+      collapseBtn: document.createElement('div'),
+      _expandContainer: document.createElement('div')
+    });
+
+    FakeController = sandbox.stub().returns({
+      controlHandler: sandbox.stub(),
+      addLocalStream: sandbox.stub(),
+      removeLocalStream: sandbox.stub(),
+      addPeerStream: sandbox.stub(),
+      removePeerStream: sandbox.stub(),
+      setSpeaking: sandbox.stub(),
+      setNotSpeaking: sandbox.stub(),
+      setMuted: sandbox.stub(),
+      setUnmuted: sandbox.stub(),
+      setPaused: sandbox.stub(),
+      setResumed: sandbox.stub(),
+      destroy: sandbox.stub()
+    });
   });
 
   describe('Constructor', function() {
 
     it('creates a new instance of the WebRTC widget', function() {
-      assert(webRTC instanceof WebRTC);
+      var options = {
+        room: fakeRoom
+      };
+
+      testWebrtc = new WebRTC(options);
+
+      assert(testWebrtc instanceof WebRTC);
+    });
+
+    it('throws an error if missing the options object', function() {
+      assert.exception(function() {
+        testWebrtc = new WebRTC();
+      }, 'WebRTC: Options object was not found or invalid');
+    });
+
+    it('throws an error if unknown argument is passed', function() {
+      assert.exception(function() {
+        testWebrtc = new WebRTC({ foo: 'bar' });
+      }, 'WebRTC: Invalid argument passed');
+    });
+
+    it('throws an error if options is not object', function() {
+      assert.exception(function() {
+        testWebrtc = new WebRTC('foo');
+      }, 'WebRTC: Options object was not found or invalid');
+    });
+
+    it('throws an error if invalid room option was passed', function() {
+      assert.exception(function() {
+        testWebrtc = new WebRTC({ room: 'foo' });
+      }, 'WebRTC: Room was not found or invalid');
+    });
+
+    it('throws an error if invalid collapsed option is passed', function() {
+      assert.exception(function() {
+        testWebrtc = new WebRTC({ room: fakeRoom, collapsed: null });
+      }, 'WebRTC: collapsed value must be a boolean');
+    });
+
+    it('throws an error if invalid listContainer is passed', function() {
+      assert.exception(function() {
+        testWebrtc = new WebRTC({ room: fakeRoom, listContainer: 'DOM' });
+      }, 'WebRTC: listContainer must be a DOM element');
+    });
+
+    it('throws an error if invalid expandContainer is passed', function() {
+      assert.exception(function() {
+        testWebrtc = new WebRTC({ room: fakeRoom, expandContainer: 'DOM' });
+      }, 'WebRTC: expandContainer must be a DOM element');
+    });
+  });
+
+  describe('#initialize', function() {
+    beforeEach(function(done) {
+      var options = {
+        room: fakeRoom
+      };
+
+      testWebrtc = new WebRTC(options);
+
+      testWebrtc._UserCache = FakeUserCache;
+      testWebrtc._View = FakeView;
+      testWebrtc._Controller = FakeController;
+      testWebrtc._goRTC = FakeGoRTC;
+
+      sandbox.spy(testWebrtc._binder, 'on');
+      sandbox.spy(testWebrtc._binder, 'off');
+      sandbox.spy(testWebrtc, 'initialize');
+
+      testWebrtc.initialize(done);
+    });
+
+    afterEach(function(done) {
+      testWebrtc.destroy(done);
+    });
+
+    it ('Initializes the WebRTC widget successfully', function() {
+      sinon.assert.calledOnce(testWebrtc.initialize);
+    });
+
+    it ('Registers listeners to gortc events', function() {
+      var gortcEvents = {
+        localStream: testWebrtc._controller.addLocalStream,
+        localStreamStopped: testWebrtc._controller.removeLocalStream,
+        peerStreamAdded: testWebrtc._controller.addPeerStream,
+        peerStreamRemoved: testWebrtc._controller.removePeerStream,
+        speaking: testWebrtc._controller.setSpeaking,
+        stoppedSpeaking: testWebrtc._controller.setNotSpeaking,
+        audioOff: testWebrtc._controller.setMuted,
+        audioOn: testWebrtc._controller.setUnmuted,
+        videoOff: testWebrtc._controller.setPaused,
+        videoOn: testWebrtc._controller.setResumed
+      };
+
+      _.each(gortcEvents, function(listener, event) {
+        sinon.assert.calledWith(testWebrtc._gortc.on, event, listener);
+      });
+    });
+
+    it('Registers listeners to userCache events', function() {
+      var userCacheEvents = {
+        join: testWebrtc._view.addUser,
+        leave: testWebrtc._view.removeUser,
+        change: testWebrtc._view.updateUser
+      };
+
+      _.each(userCacheEvents, function(listener, event) {
+        sinon.assert.calledWith(testWebrtc._userCache.on, event, listener);
+      });
+    });
+
+    it('Registers listeners to DOM events', function() {
+      var view = testWebrtc._view;
+
+      sinon.assert.calledWith(testWebrtc._binder.on, view.collapseBtn,
+                             'click',
+                             view.toggleCollapse);
+
+      sinon.assert.calledWith(testWebrtc._binder.on, view.list,)
     });
   });
 });
