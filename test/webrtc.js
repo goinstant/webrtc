@@ -11,6 +11,7 @@ describe('WebRTC', function() {
   var $ = require('jquery');
 
   var WebRTC = require('webrtc');
+  var COMMON = require('webrtc/lib/common');
 
   var sandbox;
 
@@ -80,7 +81,10 @@ describe('WebRTC', function() {
       initialize: sandbox.stub(),
       destroy: sandbox.stub(),
 
-      controlHandler: sandbox.stub()
+      toggleJoin: sandbox.stub(),
+      toggleMute: sandbox.stub(),
+      togglePause: sandbox.stub(),
+      toggleExpand: sandbox.stub()
     });
   });
 
@@ -187,17 +191,34 @@ describe('WebRTC', function() {
       var view = testWebrtc._view;
       var controller = testWebrtc._controller;
 
-      sinon.assert.calledWith(testWebrtc._binder.on, view.collapseBtn,
-                             'click',
-                             view.toggleCollapse);
-
-      sinon.assert.calledWith(testWebrtc._binder.on, view.list,
+      sinon.assert.calledWith(testWebrtc._binder.on,
+                              view.collapseBtn,
                               'click',
-                              controller.controlHandler);
+                              view.toggleCollapse);
 
-      sinon.assert.calledWith(testWebrtc._binder.on, view.expandContainer,
+      sinon.assert.calledWith(testWebrtc._binder.on,
+                              view.list,
                               'click',
-                              controller.controlHandler);
+                              '.' + COMMON.JOIN_CLASS,
+                              controller.toggleJoin);
+
+      sinon.assert.calledWith(testWebrtc._binder.on,
+                              view.list,
+                              'click',
+                              '.' + COMMON.LEAVE_CLASS,
+                              controller.toggleJoin);
+
+      sinon.assert.calledWith(testWebrtc._binder.on,
+                              view.list,
+                              'click',
+                              '.' + COMMON.AUDIO_CLASS,
+                              controller.toggleMute);
+
+      sinon.assert.calledWith(testWebrtc._binder.on,
+                              view.list,
+                              'click',
+                              '.' + COMMON.PAUSE_CLASS,
+                              controller.togglePause);
     });
   });
 
@@ -251,17 +272,34 @@ describe('WebRTC', function() {
         var view = testWebrtc._view;
         var controller = testWebrtc._controller;
 
-        sinon.assert.calledWith(testWebrtc._binder.off, view.collapseBtn,
-                               'click',
-                               view.toggleCollapse);
-
-        sinon.assert.calledWith(testWebrtc._binder.off, view.list,
+        sinon.assert.calledWith(testWebrtc._binder.off,
+                                view.collapseBtn,
                                 'click',
-                                controller.controlHandler);
+                                view.toggleCollapse);
 
-        sinon.assert.calledWith(testWebrtc._binder.off, view.expandContainer,
+        sinon.assert.calledWith(testWebrtc._binder.off,
+                                view.list,
                                 'click',
-                                controller.controlHandler);
+                                '.' + COMMON.JOIN_CLASS,
+                                controller.toggleJoin);
+
+        sinon.assert.calledWith(testWebrtc._binder.off,
+                                view.list,
+                                'click',
+                                '.' + COMMON.LEAVE_CLASS,
+                                controller.toggleJoin);
+
+        sinon.assert.calledWith(testWebrtc._binder.off,
+                                view.list,
+                                'click',
+                                '.' + COMMON.AUDIO_CLASS,
+                                controller.toggleMute);
+
+        sinon.assert.calledWith(testWebrtc._binder.off,
+                                view.list,
+                                'click',
+                                '.' + COMMON.PAUSE_CLASS,
+                                controller.togglePause);
       });
     });
   });
