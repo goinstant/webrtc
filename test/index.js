@@ -225,7 +225,80 @@ describe('WebRTC', function() {
                               'click',
                               controller.controlHandler);
     });
+  });
 
+  describe('#destroy', function() {
+    beforeEach(function(done) {
+      expandContainer = document.createElement('div');
 
+      var options = {
+        room: fakeRoom,
+        expandContainer: expandContainer
+      };
+
+      testWebrtc = new WebRTC(options);
+
+      testWebrtc._UserCache = FakeUserCache;
+      testWebrtc._View = FakeView;
+      testWebrtc._Controller = FakeController;
+      testWebrtc._goRTC = FakeGoRTC;
+
+      sandbox.spy(testWebrtc._binder, 'on');
+      sandbox.spy(testWebrtc._binder, 'off');
+      sandbox.spy(testWebrtc, 'destroy');
+
+      testWebrtc.initialize(done);
+    });
+
+    it('Unbinds from gortc', function() {
+      testWebrtc.destroy(function(err) {
+        if (err) {
+          throw err;
+        }
+
+        sinon.assert.calledOnce(testWebrtc._gortc.off);
+      });
+    });
+
+    it('Unbinds from the userCache', function() {
+      testWebrtc.destroy(function(err) {
+        if (err) {
+          throw err;
+        }
+
+        var userCacheEvents = {
+          join: testWebrtc._view.addUser,
+          leave: testWebrtc._view.removeUser,
+          change: testWebrtc._view.updateUser
+        };
+
+        _.each(userCacheEvents, function(listener, event) {
+          sinon.assert.calledWith(testWebrtc._userCache.off, event, listener);
+        });
+      });
+    });
+
+    it('Unbinds from the DOM', function() {
+      testWebrtc.destroy(function(err) {
+        if (err) {
+          throw err;
+        }
+
+        var view = testWebrtc._view;
+        var controller = testWebrtc._controller;
+
+        sinon.assert.calledWith(testWebrtc._binder.off, view.collapseBtn,
+                               'click',
+                               view.toggleCollapse);
+
+        sinon.assert.calledWith(testWebrtc._binder.off, view.list,
+                                'click',
+                                controller.controlHandler);
+
+        sinon.assert.calledWith(testWebrtc._binder.off, view.expandContainer,
+                                'click',
+                                controller.controlHandler);
+      });
+    });
   });
 });
