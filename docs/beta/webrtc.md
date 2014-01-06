@@ -19,6 +19,9 @@ passed along with their JWT, and set on the key `/users/:id`.
 - Expand a user to a separate container to enlarge their stream
 - Collapse the list of users and their streams
 
+## Supported Browsers
+The WebRTC widget currently supports the latest versions of FireFox and Chrome.
+
 ## Table of Contents
 
 1. [Code Example](#code-example)
