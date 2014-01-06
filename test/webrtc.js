@@ -77,18 +77,10 @@ describe('WebRTC', function() {
     });
 
     FakeController = sandbox.stub().returns({
-      controlHandler: sandbox.stub(),
-      addLocalStream: sandbox.stub(),
-      removeLocalStream: sandbox.stub(),
-      addPeerStream: sandbox.stub(),
-      removePeerStream: sandbox.stub(),
-      setSpeaking: sandbox.stub(),
-      setNotSpeaking: sandbox.stub(),
-      setMuted: sandbox.stub(),
-      setUnmuted: sandbox.stub(),
-      setPaused: sandbox.stub(),
-      setResumed: sandbox.stub(),
-      destroy: sandbox.stub()
+      initialize: sandbox.stub(),
+      destroy: sandbox.stub(),
+
+      controlHandler: sandbox.stub()
     });
   });
 
@@ -178,24 +170,6 @@ describe('WebRTC', function() {
       sinon.assert.calledOnce(testWebrtc.initialize);
     });
 
-    it ('Registers listeners to gortc events', function() {
-      var gortcEvents = {
-        localStream: testWebrtc._controller.addLocalStream,
-        localStreamStopped: testWebrtc._controller.removeLocalStream,
-        peerStreamAdded: testWebrtc._controller.addPeerStream,
-        peerStreamRemoved: testWebrtc._controller.removePeerStream,
-        speaking: testWebrtc._controller.setSpeaking,
-        stoppedSpeaking: testWebrtc._controller.setNotSpeaking,
-        audioOff: testWebrtc._controller.setMuted,
-        audioOn: testWebrtc._controller.setUnmuted,
-        videoOff: testWebrtc._controller.setPaused,
-        videoOn: testWebrtc._controller.setResumed
-      };
-
-      _.each(gortcEvents, function(listener, event) {
-        sinon.assert.calledWith(testWebrtc._gortc.on, event, listener);
-      });
-    });
 
     it('Registers listeners to userCache events', function() {
       var userCacheEvents = {
@@ -248,16 +222,6 @@ describe('WebRTC', function() {
       sandbox.spy(testWebrtc, 'destroy');
 
       testWebrtc.initialize(done);
-    });
-
-    it('Unbinds from gortc', function() {
-      testWebrtc.destroy(function(err) {
-        if (err) {
-          throw err;
-        }
-
-        sinon.assert.calledOnce(testWebrtc._gortc.off);
-      });
     });
 
     it('Unbinds from the userCache', function() {
