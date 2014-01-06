@@ -30,6 +30,7 @@ describe('WebRTC', function() {
   var FakeGoRTC;
   var FakeView;
   var FakeController;
+  var expandContainer;
 
   function createFakeKey(name) {
     return {
@@ -72,7 +73,7 @@ describe('WebRTC', function() {
 
       list: document.createElement('ul'),
       collapseBtn: document.createElement('div'),
-      _expandContainer: document.createElement('div')
+      expandContainer: document.createElement('div')
     });
 
     FakeController = sandbox.stub().returns({
@@ -148,8 +149,11 @@ describe('WebRTC', function() {
 
   describe('#initialize', function() {
     beforeEach(function(done) {
+      expandContainer = document.createElement('div');
+
       var options = {
-        room: fakeRoom
+        room: fakeRoom,
+        expandContainer: expandContainer
       };
 
       testWebrtc = new WebRTC(options);
@@ -207,12 +211,21 @@ describe('WebRTC', function() {
 
     it('Registers listeners to DOM events', function() {
       var view = testWebrtc._view;
+      var controller = testWebrtc._controller;
 
       sinon.assert.calledWith(testWebrtc._binder.on, view.collapseBtn,
                              'click',
                              view.toggleCollapse);
 
-      sinon.assert.calledWith(testWebrtc._binder.on, view.list,)
+      sinon.assert.calledWith(testWebrtc._binder.on, view.list,
+                              'click',
+                              controller.controlHandler);
+
+      sinon.assert.calledWith(testWebrtc._binder.on, view.expandContainer,
+                              'click',
+                              controller.controlHandler);
     });
+
+
   });
 });
