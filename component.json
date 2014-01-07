@@ -18,7 +18,7 @@
     "discore/closest": "0.1.2",
     "goinstant/usercache": "v1.0.0",
     "goinstant/colors-common": "v1.0.0",
-    "goinstant/gortc": "v1.0.0"
+    "goinstant/gortc": "v1.1.0"
   },
 
   "development": {
@@ -32,7 +32,6 @@
     "index.js",
     "lib/errors.js",
     "lib/common.js",
-    "lib/compatible.js",
     "lib/webrtc.js",
     "lib/controller.js",
     "lib/view.js"
