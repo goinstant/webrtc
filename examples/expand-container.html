@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>GoInstant: WebRTC Example: expand Container</title>
+
+    <script src="https://cdn.goinstant.net/v1/platform.min.js"></script>
+    <script src="https://cdn.goinstant.net/widgets/user-colors/latest/user-colors.min.js"></script>
+
+    <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+    <script src="../node_modules/lodash/lodash.js"></script>
+
+    <!-- Config -->
+    <script src="../config/config.js"></script>
+
+    <!-- Widget Example Page -->
+    <link rel="stylesheet" href="../node_modules/widget-examples/css/examples.css" />
+    <script src="../node_modules/widget-examples/js/template.js"></script>
+    <script src="../node_modules/widget-examples/js/examples.js"></script>
+
+    <!-- GoInstant Widget Build -->
+    <link rel="stylesheet" href="../build/build.css" />
+    <script src="../build/build.js"></script>
+    <style>
+      .myContainer {
+        width: 400px;
+        height: 400px;
+        position: absolute;
+        top: 70px;
+        right: 0px;
+      }
+    </style>
+  </head>
+  <body>
+
+    <script type="text/javascript">
+
+      // Define the example
+      function widgetTest(room) {
+
+        var WebRTC = require('webrtc');
+        var UserColors = window.goinstant.widgets.UserColors;
+
+        var options = {
+          room: room,
+          expandContainer: $('.myContainer')[0]
+        };
+
+        var userColors = new UserColors({ room: room });
+        userColors.choose(function(err){
+          if (err) {
+            throw err;
+          }
+        });
+
+        var webRTC = new WebRTC(options);
+        window.webrtc = webRTC;
+
+        webRTC.initialize(function(err) {
+          if (err) {
+            throw err;
+          }
+        });
+      }
+
+      // Load the example test page
+      $(document).ready(function() {
+
+        var config = {
+          name: 'WebRTC',
+          desc: 'expandContainer option',
+          test: widgetTest
+        };
+
+        var example = new Example(config);
+        example.load();
+      });
+
+    </script>
+
+    <div id="common"></div>
+
+    <div id="expected">
+      <p>
+      The expected behaviour of this page is as follows:
+      </p>
+      <ul>
+        <li>The WebRTC widget should ...</li>
+      </ul>
+    </div>
+
+    <div class="myContainer"></div>
+  </body>
+</html>

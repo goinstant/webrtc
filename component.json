@@ -1,0 +1,58 @@
+{
+  "name": "webrtc",
+  "repo": "goinstant/webrtc",
+  "description": "The GoInstant Web RTC widget provides a drop-in, back-end free, video conferencing solution.",
+  "version": "0.1.0",
+  "keywords": [
+    "GoInstant",
+    "widget",
+    "webrtc"
+  ],
+
+  "dependencies": {
+    "lodash/lodash": "2.3.0",
+    "stagas/binder": "0.0.1",
+    "component/emitter": "1.1.0",
+    "component/classes": "1.1.4",
+    "caolan/async": "f01b3992fbe7aa2f4881152143608ad666aea1cc",
+    "discore/closest": "0.1.2",
+    "goinstant/usercache": "v1.0.0",
+    "goinstant/colors-common": "v1.0.0",
+    "goinstant/gortc": "v1.1.0"
+  },
+
+  "development": {
+    "visionmedia/mocha": "*",
+    "component/jquery": "*"
+  },
+
+  "main": "index.js",
+
+  "scripts": [
+    "index.js",
+    "lib/errors.js",
+    "lib/common.js",
+    "lib/webrtc.js",
+    "lib/controller.js",
+    "lib/view.js"
+  ],
+
+  "templates": [
+    "templates/list-template.html",
+    "templates/user-template.html",
+    "templates/local-user-template.html"
+  ],
+
+  "styles": [
+    "webrtc.css"
+  ],
+
+  "images": [
+    "images/transparent.png",
+    "images/sprite.png",
+    "images/sprite@2x.png",
+    "images/user.png",
+    "images/user-audio.png",
+    "images/user-paused.png"
+  ]
+}

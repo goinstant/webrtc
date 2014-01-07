@@ -1,0 +1,7 @@
+- browserName: "firefox"
+  version: ""
+  platform: "Windows 7"
+
+- browserName: "chrome"
+  version: ""
+  platform: "Windows 7"

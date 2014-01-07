@@ -1,0 +1,463 @@
+/* ==========================================================================
+   GoInstant WebRTC Widget Styles
+   ========================================================================== */
+
+
+/* Change the box model and reset line height */
+.gi-webrtc * {
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  line-height: 1;
+}
+
+/* Wrapper */
+.gi-webrtc {
+  position: fixed;
+  display: block;
+  bottom: -3px;
+  width: 100%;
+  text-align: center;
+  font-family: sans-serif;
+  font-size: 14px;
+  transition: bottom .35s cubic-bezier(0,1,.45,1);
+}
+
+    /* Collapsed */
+    .gi-webrtc.gi-collapsed {
+      bottom: -182px;
+    }
+
+/*
+   Positioning
+   ========================================================================== */
+
+  /* Centered Position */
+  .gi-webrtc-centered {
+    display: inline-block;
+    position: relative;
+    max-width: 95%;
+    border-bottom: 0;
+    box-shadow: 0 1px 5px rgba(0,0,0,.2);
+  }
+
+  .gi-webrtc .gi-list-wrapper {
+    text-align: left;
+  }
+
+/*
+   User List
+   ========================================================================== */
+
+.gi-webrtc .gi-list {
+  margin: 0;
+  padding: 7px 0 6px 7px;
+  list-style-type: none;
+  overflow-x: auto;
+  white-space: nowrap;
+  background: #f5f5f5;
+  border: 1px #CCC;
+  border-style: none solid;
+  *zoom: 1;
+}
+
+  /* Clearfix the list */
+  .gi-webrtc .gi-list:before,
+  .gi-webrtc .gi-list:after {
+    content: " ";
+    display: table;
+  }
+
+  .gi-webrtc .gi-list:after {
+    clear: both;
+  }
+
+/* User Label */
+.gi-webrtc .gi-user {
+  display: inline-block;
+  margin-left: 7px;
+  opacity: 1;
+  transition: opactiy .2s linear;
+}
+
+  .gi-webrtc.gi-collapsed .gi-user {
+    opacity: 0;
+  }
+
+  .gi-webrtc .gi-user:first-child {
+    margin-left: 0;
+  }
+
+  .gi-webrtc .gi-user:last-child {
+    margin-right: 7px;
+  }
+
+  .gi-webrtc .gi-user .gi-user-wrapper {
+    position: relative;
+    width: 100%;
+    padding: 6px;
+    overflow: hidden;
+    border: 1px solid #ccc;
+    border-top: 0;
+    border-radius: 0 0 3px 3px;
+  }
+
+    .gi-webrtc .gi-user.gi-local .gi-user-wrapper {
+      background-color: #fff;
+      font-weight: 600;
+    }
+
+  /* Stream object wrapper */
+  .gi-webrtc .gi-user .gi-stream-wrapper {
+    position: relative;
+    width: 170px;
+    height: 127px;
+    overflow: hidden;
+    background-color: #ddd;
+    background-image: url('images/user.png');
+    background-repeat: no-repeat;
+    background-position: 40% center;
+    border: 1px solid #CCC;
+    border-radius: 3px 3px 0 0;
+  }
+
+    .gi-webrtc .gi-user.gi-streaming:not(.gi-streaming-audio) .gi-stream-wrapper {
+      border: 0;
+    }
+
+    .gi-webrtc .gi-user.gi-local .gi-stream-wrapper {
+      background-image: none;
+    }
+
+    /* Audio Only Avatar */
+    .gi-webrtc .gi-user.gi-streaming-audio .gi-stream-wrapper {
+      background-image: url('images/user-audio.png');
+    }
+
+    /* Audio Only stream is hidden */
+    .gi-webrtc .gi-user.gi-streaming-audio .gi-stream {
+      visibility: hidden;
+    }
+
+    /* Paused User */
+    .gi-webrtc .gi-user.gi-paused .gi-stream-wrapper {
+      background-image: url('images/user-paused.png');
+    }
+    .gi-webrtc .gi-user.gi-local.gi-paused .gi-stream-wrapper {
+      background: #222;
+    }
+    .gi-webrtc .gi-user.gi-local.gi-paused .gi-stream {
+      visibility: visible;
+      opacity: .5;
+    }
+    .gi-webrtc .gi-user.gi-paused .gi-stream {
+      visibility: hidden;
+    }
+ 
+    /* Stream object */
+    .gi-webrtc .gi-user .gi-stream {
+      width: 100%;
+      height: 100%;
+      /* SVG mask for border radius */
+      mask: url('data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4NCjwhLS0gR2VuZXJhdG9yOiBBZG9iZSBJbGx1c3RyYXRvciAxNi4wLjQsIFNWRyBFeHBvcnQgUGx1Zy1JbiAuIFNWRyBWZXJzaW9uOiA2LjAwIEJ1aWxkIDApICAtLT4NCjwhRE9DVFlQRSBzdmcgUFVCTElDICItLy9XM0MvL0RURCBTVkcgMS4xLy9FTiIgImh0dHA6Ly93d3cudzMub3JnL0dyYXBoaWNzL1NWRy8xLjEvRFREL3N2ZzExLmR0ZCI+DQo8c3ZnIHZlcnNpb249IjEuMSIgaWQ9IkxheWVyXzEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIHg9IjBweCIgeT0iMHB4Ig0KCSB3aWR0aD0iMTcwcHgiIGhlaWdodD0iMTI3cHgiIHZpZXdCb3g9IjAgMCAxNzAgMTI3IiBlbmFibGUtYmFja2dyb3VuZD0ibmV3IDAgMCAxNzAgMTI3IiB4bWw6c3BhY2U9InByZXNlcnZlIj4NCjxwYXRoIGQ9Ik0wLDEyN1YzYzAtMS42NSwxLjM1LTMsMy0zaDE2NGMxLjY1LDAsMywxLjM1LDMsM3YxMjQiLz4NCjxnPg0KPC9nPg0KPGc+DQo8L2c+DQo8Zz4NCjwvZz4NCjxnPg0KPC9nPg0KPGc+DQo8L2c+DQo8Zz4NCjwvZz4NCjxnPg0KPC9nPg0KPGc+DQo8L2c+DQo8Zz4NCjwvZz4NCjxnPg0KPC9nPg0KPGc+DQo8L2c+DQo8Zz4NCjwvZz4NCjxnPg0KPC9nPg0KPGc+DQo8L2c+DQo8Zz4NCjwvZz4NCjwvc3ZnPg0K');
+      -webkit-mask-box-image: url('data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4NCjwhLS0gR2VuZXJhdG9yOiBBZG9iZSBJbGx1c3RyYXRvciAxNi4wLjQsIFNWRyBFeHBvcnQgUGx1Zy1JbiAuIFNWRyBWZXJzaW9uOiA2LjAwIEJ1aWxkIDApICAtLT4NCjwhRE9DVFlQRSBzdmcgUFVCTElDICItLy9XM0MvL0RURCBTVkcgMS4xLy9FTiIgImh0dHA6Ly93d3cudzMub3JnL0dyYXBoaWNzL1NWRy8xLjEvRFREL3N2ZzExLmR0ZCI+DQo8c3ZnIHZlcnNpb249IjEuMSIgaWQ9IkxheWVyXzEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIHg9IjBweCIgeT0iMHB4Ig0KCSB3aWR0aD0iMTcwcHgiIGhlaWdodD0iMTI3cHgiIHZpZXdCb3g9IjAgMCAxNzAgMTI3IiBlbmFibGUtYmFja2dyb3VuZD0ibmV3IDAgMCAxNzAgMTI3IiB4bWw6c3BhY2U9InByZXNlcnZlIj4NCjxwYXRoIGQ9Ik0wLDEyN1YzYzAtMS42NSwxLjM1LTMsMy0zaDE2NGMxLjY1LDAsMywxLjM1LDMsM3YxMjQiLz4NCjxnPg0KPC9nPg0KPGc+DQo8L2c+DQo8Zz4NCjwvZz4NCjxnPg0KPC9nPg0KPGc+DQo8L2c+DQo8Zz4NCjwvZz4NCjxnPg0KPC9nPg0KPGc+DQo8L2c+DQo8Zz4NCjwvZz4NCjxnPg0KPC9nPg0KPGc+DQo8L2c+DQo8Zz4NCjwvZz4NCjxnPg0KPC9nPg0KPGc+DQo8L2c+DQo8Zz4NCjwvZz4NCjwvc3ZnPg0K');
+    }
+
+
+      /* User stream options */
+      .gi-webrtc .gi-user .gi-stream-wrapper .gi-overlay {
+        opacity: 0;
+        visibility: hidden;
+        position: absolute;
+        margin: 6px;
+        padding: 6px 0 1px;
+        z-index: 1;
+        background: url('images/transparent.png');
+        background: rgba(0,0,0,.7);
+        border-radius: 3px;
+        box-shadow: 0 1px 2px rgba(0,0,0,.2);
+        transition: all .1s linear;
+      }
+
+        /* Show overlay tools when user is streaming */
+        .gi-webrtc .gi-user.gi-streaming:hover .gi-overlay {
+          opacity: 1;
+          visibility: visible;
+        }
+
+        /* Options icons */
+        .gi-webrtc .gi-overlay > div {
+          padding: 0 6px 6px;
+          opacity: .8;
+          cursor: pointer;
+          transition: opacity .1s linear;
+        }
+
+          .gi-webrtc .gi-overlay > div:hover {
+            opacity: 1;
+          }
+
+        .gi-webrtc .gi-overlay .gi-icon {
+          display: block;
+        }
+
+/* Avatar */
+.gi-webrtc .gi-avatar {
+  overflow: hidden;
+  width: 25px;
+  height: 21px;
+  border-radius: 2px;
+}
+
+  .gi-webrtc .gi-avatar .gi-avatar-img {
+    background: #f5f5f5;
+    width: 25px;
+    height: 25px;
+    vertical-align: inherit; /* Overrides breaking style in bootstrap */
+  }
+
+  .gi-webrtc .gi-color {
+    position: relative;
+    display: block;
+    float: left;
+    width: 25px;
+    height: 25px;
+    background-image: url('images/sprite.png');
+    background-repeat: no-repeat;
+    background-position: -1px 0;
+    border-radius: 2px;
+  }
+
+  @media print, (-webkit-min-device-pixel-ratio: 1.25), (min-resolution: 120dpi) {
+    .gi-webrtc .gi-color {
+      background-image: url('images/sprite@2x.png');
+      background-size: 140px 52px;
+    }
+  }
+
+    /* Transparent Avatar Border */
+    .gi-webrtc .gi-color:before {
+      display: block;
+      content: '';
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      border-radius: 2px;
+      box-shadow: inset 0 0 0 1px rgba(0,0,0,.2);
+    }
+
+/* Username */
+.gi-webrtc .gi-name {
+  display: block;
+  float: left;
+  width: 103px;
+  padding: 1px 10px 0 6px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  line-height: 2;
+  font-size: 12px;
+  color: #444;
+}
+
+.gi-webrtc .gi-user .gi-audio {
+  position: absolute;
+  top: 10px;
+  right: 7px;
+  width: 16px;
+  height: 16px;
+}
+
+/*
+   Join Screen
+   ========================================================================== */
+
+.gi-webrtc .gi-join {
+  display: block;
+  margin: 25% auto 0;
+  padding: 0 9px 0 0;
+  line-height: 1;
+  background: #50565C;
+  border: 0;
+  border-radius: 3px;
+  text-align: center;
+  font-size: 13px;
+  font-family: sans-serif;
+  color: #fff;
+  cursor: pointer;
+  -webkit-appearance: none;
+  -webkit-font-smoothing: antialiased;
+  box-shadow: 0 1px 2px rgba(0,0,0,.2);
+}
+
+  .gi-webrtc .gi-join:hover {
+    background: #5F6870;
+    text-decoration: none;
+  }
+
+  .gi-webrtc .gi-join:active {
+    background: #50565C;
+    outline: none;
+    box-shadow: 0 1px 2px rgba(0,0,0,0);
+  }
+
+  .gi-webrtc .gi-join:focus {
+    outline: none;
+  }
+  
+  .gi-webrtc .gi-join > span {
+    display: inline-block;
+    margin-right: 5px;
+    padding: 8px 7px 12px;
+    background: #262D35;
+  }
+
+    .gi-webrtc .gi-join:hover > span {
+      background: #414953;
+    }
+    .gi-webrtc .gi-join:active > span {
+      background: #262D35;
+    }
+
+    .gi-webrtc .gi-join .gi-icon {
+      position: relative;
+      top: 1px;
+      width: 23px;
+      background-position: -105px -55px;
+    }
+
+      .gi-webrtc .gi-user.gi-streaming .gi-join {
+        display: none;
+      }
+
+
+/*
+   Expanded Presenter Container
+   ========================================================================== */
+
+.gi-webrtc.gi-expand-container .gi-stream-wrapper {
+  max-width: 100%;
+  max-height: 100%;
+}
+
+/*
+   Collapse Toggle
+   ========================================================================== */
+
+.gi-webrtc .gi-collapse-wrapper {
+  position: absolute;
+  top: -7px;
+  left: 0;
+  width: 100%;
+  height: 7px;
+  border-radius: 3px 0 0 0;
+  background: url('images/transparent.png');
+  background: rgba(0,0,0,.7);
+}
+
+  .gi-webrtc .gi-collapse {
+    display: block;
+    position: absolute;
+    width: 45px;
+    height: 23px;
+    top: -23px;
+    right: 0;
+    padding: 7px 0 0 0;
+    background: url('images/transparent.png');
+    background: rgba(0,0,0,.7);
+    border-radius: 3px 3px 0 0;
+    cursor: pointer;
+  }
+
+  .gi-webrtc .gi-collapse:hover .gi-icon {
+    opacity: 1;
+  }
+
+    .gi-webrtc .gi-collapse .gi-icon {
+      background-position: -68px -7px;
+      width: 29px;
+      opacity: .8;
+      transition: opacity .1s linear;
+    }
+
+      .gi-webrtc.gi-collapsed .gi-collapse .gi-icon {
+        background-position: -31px -7px;
+      }
+
+/*
+   Icons
+   ========================================================================== */
+
+.gi-webrtc .gi-icon {
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  background-image: url('images/sprite.png');
+  background-repeat: no-repeat;
+}
+
+@media print, (-webkit-min-device-pixel-ratio: 1.25), (min-resolution: 120dpi) {
+  .gi-webrtc .gi-icon {
+    background-image: url('images/sprite@2x.png');
+    background-size: 159px 80px;
+  }
+}
+
+  /* Audio */
+  .gi-webrtc .gi-audio .gi-icon {
+    height: 17px;
+    background-position: 10px 10px;
+  }
+
+    /* Speaking */
+    .gi-webrtc .gi-audio.gi-speaking .gi-icon {
+      background-position: -6px -31px;
+    }
+
+    /* Muted */
+    .gi-webrtc .gi-audio.gi-muted .gi-icon {
+      background-position: -35px -31px;
+    }
+
+  /* Expand */
+  .gi-webrtc .gi-expand .gi-icon {
+    background-position: -71px -30px;
+  }
+
+  /* Reverse Expand */
+  .gi-webrtc.gi-expand-container .gi-expand .gi-icon {
+    background-position: -106px -30px;
+  }
+
+  /* Toggle Stream - Pause */
+  .gi-webrtc .gi-user.gi-streaming .gi-pause .gi-icon {
+    background-position: -6px -57px;
+  }
+
+  /* Toggle Stream - Resume */
+  .gi-webrtc .gi-user.gi-paused .gi-pause .gi-icon {
+    background-position: -36px -57px;
+  }
+
+  /* Leave Session */
+  .gi-webrtc .gi-leave .gi-icon {
+    background-position: -71px -56px;
+  }
+
+
+/*
+   Helpers
+   ========================================================================== */
+
+.gi-webrtc .clearfix:before,
+.gi-webrtc .clearfix:after {
+  content: " ";
+  display: table;
+}
+
+.gi-webrtc .clearfix:after {
+  clear: both;
+}
+
+.gi-webrtc .clearfix {
+  *zoom: 1;
+}
