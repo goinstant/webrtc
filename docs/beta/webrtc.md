@@ -3,7 +3,7 @@
 The WebRTC widget provides a drop-in, back-end free, video conferencing
 solution for your app.
 
-![WebRTC](images/screenshots/webrtc.png)
+![WebRTC](static/images/screenshots/webrtc.png)
 
 You can render it collapsed, specify a container to render it in, and enable
 expanding users into a larger container.
