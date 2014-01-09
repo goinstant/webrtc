@@ -1,7 +1,15 @@
 # WebRTC
 
-The WebRTC widget provides a drop-in, back-end free, video conferencing
-solution for your app.
+[Github Link](html/webrtc_github.html "include")
+
+The Video and Audio widget provides a drop-in, back-end free video conferencing
+solution for your app. It's powered by [GoRTC](./gortc.html), our integration
+with WebRTC. Using the Video and Audio widget means you don't need to setup a
+backend/server or configure WebRTC, just add our code into your app and you're
+set.
+
+If you want additional functionality beyond what's provided in the Video and
+Audio widget, you should look at the [GoRTC library](./gortc.html).
 
 ![WebRTC](static/images/screenshots/webrtc.png)
 
