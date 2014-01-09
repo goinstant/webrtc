@@ -9,10 +9,17 @@ describe('Controller', function() {
 
   var _ = require('lodash');
   var $ = require('jquery');
+  var classes = require('classes');
 
   var Controller = require('webrtc/lib/controller');
+  var COMMON = require('webrtc/lib/common');
 
   var sandbox;
+
+  // Ignore tests for unsupported browsers
+  if(!window.supported) {
+    return;
+  }
 
   before(function() {
     sandbox = sinon.sandbox.create();
@@ -29,13 +36,19 @@ describe('Controller', function() {
   var fakeWidget;
   var fakeUserCache;
   var FakeGoRTC;
-  var FakeView;
+  var fakeView;
   var FakeController;
-  var expandContainer;
   var fakeLocalUser;
   var fakeLocalUserKey;
+  var listEl;
+  var collapseBtnEl;
+  var expandContainerEl;
 
   function createFakeKey(name) {
+    listEl = document.createElement('ul');
+    collapseBtnEl = document.createElement('div');
+    expandContainerEl = document.createElement('div');
+
     return {
       name: name,
       get: sinon.stub().yields(),
@@ -48,9 +61,10 @@ describe('Controller', function() {
   }
 
   beforeEach(function() {
+
     fakeLocalUser = {
       displayName: 'Bob',
-      id: 1234
+      id: '1234'
     };
 
     fakeLocalUserKey = createFakeKey('/.users/' + fakeLocalUser.id);
@@ -68,26 +82,34 @@ describe('Controller', function() {
     FakeGoRTC = sandbox.stub().returns({
       on: sandbox.stub(),
       off: sandbox.stub(),
-      stop: sandbox.stub()
+      start: sandbox.stub(),
+      stop: sandbox.stub(),
+      mute: sandbox.stub(),
+      unmute: sandbox.stub(),
+      pause: sandbox.stub(),
+      resume: sandbox.stub()
     });
 
-    FakeView = sandbox.stub().returns({
+    fakeView = {
       initialize: sandbox.stub(),
       destroy: sandbox.stub(),
       toggleCollapse: sandbox.stub().yields(),
       addUser: sandbox.stub(),
       removeUser: sandbox.stub(),
       updateUser: sandbox.stub(),
+      expandUser: sandbox.stub(),
+      restoreUser: sandbox.stub(),
 
-      list: document.createElement('ul'),
-      collapseBtn: document.createElement('div'),
-      expandContainer: document.createElement('div')
-    });
+      list: listEl,
+      collapseBtn: collapseBtnEl,
+      expandContainer: expandContainerEl
+    };
 
     fakeWidget = {
       _room: fakeRoom,
       _userCache: fakeUserCache,
-      _localUser: fakeUserCache.getLocalUser()
+      _localUser: fakeUserCache.getLocalUser(),
+      _view: fakeView
     };
   });
 
@@ -134,7 +156,119 @@ describe('Controller', function() {
     });
   });
 
+  describe('toggle controls', function() {
+
+    var fakeLocalEvent;
+    var fakePeerEvent;
+    var peerVideoEl;
+
+    beforeEach(function() {
+      var userEl = document.createElement('li');
+      var controlEl = document.createElement('div');
+
+      classes(userEl).add(COMMON.USER_CLASS);
+      userEl.setAttribute(COMMON.DATA_ID, fakeLocalUser.id);
+      userEl.appendChild(controlEl);
+
+      var peerUserEl = document.createElement('li');
+      var peerControlEl = document.createElement('div');
+      peerVideoEl = document.createElement('video');
+
+      classes(peerUserEl).add(COMMON.USER_CLASS);
+      classes(peerVideoEl).add(COMMON.STREAM_CLASS);
+      peerUserEl.setAttribute(COMMON.DATA_ID, '2345');
+      peerUserEl.appendChild(peerControlEl);
+      peerUserEl.appendChild(peerVideoEl);
+
+      fakeLocalEvent = {
+        target: controlEl
+      };
+
+      fakePeerEvent = {
+        target: peerControlEl
+      };
+
+      testController = new Controller(fakeWidget);
+      testController._GoRTC = FakeGoRTC;
+
+      testController.initialize();
+    });
+
+    afterEach(function() {
+      testController.destroy();
+
+      testController = null;
+    });
+
+    it('mutes self', function() {
+      testController._streaming = true;
+      testController._muted = false;
+      testController.toggleMute(fakeLocalEvent);
+
+      sinon.assert.calledOnce(testController._goRTC.mute);
+
+      testController._muted = true;
+      testController.toggleMute(fakeLocalEvent);
+
+      sinon.assert.calledOnce(testController._goRTC.unmute);
+    });
+
+    it('mutes peer', function() {
+      testController.toggleMute(fakePeerEvent);
+
+      sinon.assert.notCalled(testController._goRTC.mute);
+      assert.isTrue(peerVideoEl.muted);
+
+      testController.toggleMute(fakePeerEvent);
+      assert.isFalse(peerVideoEl.muted);
+    });
+
+    it('expand self', function() {
+      var view = testController._view;
+      testController._streaming = true;
+      testController.toggleExpand(fakeLocalEvent);
+
+      sinon.assert.calledOnce(view.expandUser);
+      sinon.assert.calledWith(view.expandUser, fakeLocalUser.id);
+
+      testController.toggleExpand(fakeLocalEvent);
+
+      sinon.assert.calledOnce(view.restoreUser);
+      sinon.assert.calledWith(view.restoreUser, fakeLocalUser.id);
+    });
+
+    it('pause self', function() {
+      testController._streaming = true;
+      testController._paused = false;
+      testController.togglePause(fakeLocalEvent);
+
+      sinon.assert.calledOnce(testController._goRTC.pause);
+
+      testController._paused = true;
+      testController.togglePause(fakeLocalEvent);
+
+      sinon.assert.calledOnce(testController._goRTC.resume);
+    });
+
+    it('join self', function() {
+      testController.toggleJoin(fakeLocalEvent);
+
+      sinon.assert.calledOnce(testController._goRTC.start);
+
+      testController._streaming = true;
+      testController.toggleJoin(fakeLocalEvent);
+
+      sinon.assert.calledOnce(testController._goRTC.stop);
+    });
+  });
+
   describe('#destroy', function() {
+
+    beforeEach(function() {
+      testController = new Controller(fakeWidget);
+      testController.initialize();
+    });
+
     it('Unbinds from gortc', function() {
       testController.destroy(function(err) {
         if (err) {

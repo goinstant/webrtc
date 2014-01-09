@@ -152,7 +152,7 @@
     .gi-webrtc .gi-user.gi-paused .gi-stream {
       visibility: hidden;
     }
- 
+
     /* Stream object */
     .gi-webrtc .gi-user .gi-stream {
       width: 100%;
@@ -165,27 +165,29 @@
 
       /* User stream options */
       .gi-webrtc .gi-user .gi-stream-wrapper .gi-overlay {
-        opacity: 0;
         visibility: hidden;
         position: absolute;
         margin: 6px;
         padding: 6px 0 1px;
         z-index: 1;
-        background: url('images/transparent.png');
-        background: rgba(0,0,0,.7);
+        background: rgba(0,0,0,.1);
         border-radius: 3px;
         box-shadow: 0 1px 2px rgba(0,0,0,.2);
         transition: all .1s linear;
       }
 
+        .gi-webrtc .gi-user.gi-streaming .gi-stream-wrapper .gi-overlay {
+          visibility: visible;
+        }
+
         /* Show overlay tools when user is streaming */
         .gi-webrtc .gi-user.gi-streaming:hover .gi-overlay {
-          opacity: 1;
-          visibility: visible;
+          background: rgba(0,0,0,.7);
         }
 
         /* Options icons */
         .gi-webrtc .gi-overlay > div {
+          position: relative;
           padding: 0 6px 6px;
           opacity: .8;
           cursor: pointer;
@@ -198,6 +200,65 @@
 
         .gi-webrtc .gi-overlay .gi-icon {
           display: block;
+        }
+
+        /* Icon Tooltips */
+
+        .gi-webrtc .gi-overlay > div:before,
+        .gi-webrtc .gi-overlay > div:after {
+          opacity: 0;
+          visibility: hidden;
+          transition: opacity .1s linear;
+          transition-delay: .5s;
+        }
+
+          .gi-webrtc .gi-overlay > div:hover:before,
+          .gi-webrtc .gi-overlay > div:hover:after {
+            visibility: visible;
+            opacity: 1;
+          }
+
+        .gi-webrtc .gi-overlay > div:after {
+          content: "";
+          position: absolute;
+          width: 0;
+          height: 0;
+          right: -4px;
+          top: 4px;
+          border-top: 4px solid transparent;
+          border-bottom: 4px solid transparent;
+          border-right: 4px solid rgba(0,0,0,.8);
+        }
+
+        .gi-webrtc .gi-overlay > div:before {
+          content: "";
+          position: absolute;
+          height: auto;
+          top: -3px;
+          left: 32px;
+          width: auto;
+          padding: 6px;
+          border-radius: 2px;
+          background: rgba(0,0,0,.8);
+          color: #fff;
+          font-size: 11px;
+        }
+
+        /* Tooltip Contents */
+        .gi-webrtc .gi-overlay > .gi-expand:before {
+          content: "Make presenter";
+        }
+        .gi-webrtc .gi-overlay > .gi-pause:before {
+          content: "Pause stream";
+        }
+        .gi-webrtc .gi-overlay > .gi-leave:before {
+          content: "Leave session";
+        }
+        .gi-webrtc .gi-overlay > .gi-mute:before {
+          content: "Mute user";
+        }
+        .gi-webrtc .gi-user.gi-muted .gi-overlay > .gi-mute:before {
+          content: "Unmute user";
         }
 
 /* Avatar */
@@ -303,7 +364,7 @@
   .gi-webrtc .gi-join:focus {
     outline: none;
   }
-  
+
   .gi-webrtc .gi-join > span {
     display: inline-block;
     margin-right: 5px;
@@ -414,7 +475,7 @@
     }
 
     /* Muted */
-    .gi-webrtc .gi-audio.gi-muted .gi-icon {
+    .gi-webrtc .gi-user.gi-muted .gi-audio .gi-icon {
       background-position: -35px -31px;
     }
 
@@ -441,6 +502,17 @@
   /* Leave Session */
   .gi-webrtc .gi-leave .gi-icon {
     background-position: -71px -56px;
+  }
+
+  /*Unmuted User */
+  .gi-webrtc .gi-user .gi-mute .gi-icon {
+    background-position: -135px -30px;
+  }
+
+  /* Mute User */
+  .gi-webrtc .gi-user.gi-local-muted .gi-mute .gi-icon,
+  .gi-webrtc .gi-user.gi-local.gi-muted .gi-mute .gi-icon {
+    background-position: -135px -56px;
   }
 
 

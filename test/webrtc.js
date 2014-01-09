@@ -31,7 +31,9 @@ describe('WebRTC', function() {
   var FakeGoRTC;
   var FakeView;
   var FakeController;
-  var expandContainer;
+  var listEl;
+  var collapseBtnEl;
+  var expandContainerEl;
 
   function createFakeKey(name) {
     return {
@@ -46,6 +48,10 @@ describe('WebRTC', function() {
   }
 
   beforeEach(function() {
+    listEl = document.createElement('ul');
+    collapseBtnEl = document.createElement('div');
+    expandContainerEl = document.createElement('div');
+
     fakeRoom = {
       key: createFakeKey,
       self: createFakeKey
@@ -72,9 +78,9 @@ describe('WebRTC', function() {
       removeUser: sandbox.stub(),
       updateUser: sandbox.stub(),
 
-      list: document.createElement('ul'),
-      collapseBtn: document.createElement('div'),
-      expandContainer: document.createElement('div')
+      list: listEl,
+      collapseBtn: collapseBtnEl,
+      expandContainer: expandContainerEl
     });
 
     FakeController = sandbox.stub().returns({
@@ -87,6 +93,19 @@ describe('WebRTC', function() {
       toggleExpand: sandbox.stub()
     });
   });
+
+  window.supported = WebRTC.supported;
+
+  if (!WebRTC.supported) {
+    it('throws on construction in unsupported browsers', function() {
+      assert.exception(function() {
+        /*jshint unused:false*/
+        var webrtc = new WebRTC({ room: fakeRoom });
+      });
+    });
+
+    return; // Use supported browser for remaining tests
+  }
 
   describe('Constructor', function() {
 
@@ -130,6 +149,12 @@ describe('WebRTC', function() {
       }, 'WebRTC: collapsed value must be a boolean');
     });
 
+    it('throws an error if invalid autoStart option is passed', function() {
+      assert.exception(function() {
+        testWebrtc = new WebRTC({ room: fakeRoom, autoStart: null });
+      }, 'WebRTC: autoStart value must be a boolean');
+    });
+
     it('throws an error if invalid listContainer is passed', function() {
       assert.exception(function() {
         testWebrtc = new WebRTC({ room: fakeRoom, listContainer: 'DOM' });
@@ -145,11 +170,9 @@ describe('WebRTC', function() {
 
   describe('#initialize', function() {
     beforeEach(function(done) {
-      expandContainer = document.createElement('div');
-
       var options = {
         room: fakeRoom,
-        expandContainer: expandContainer
+        expandContainer: expandContainerEl
       };
 
       testWebrtc = new WebRTC(options);
@@ -211,11 +234,48 @@ describe('WebRTC', function() {
       sinon.assert.calledWith(testWebrtc._binder.on,
                               view.list,
                               'click',
-                              '.' + COMMON.AUDIO_CLASS,
+                              '.' + COMMON.MUTE_CLASS,
                               controller.toggleMute);
 
       sinon.assert.calledWith(testWebrtc._binder.on,
                               view.list,
+                              'click',
+                              '.' + COMMON.PAUSE_CLASS,
+                              controller.togglePause);
+
+
+    });
+
+    it('Registers listeners to expanded container DOM events', function() {
+      var view = testWebrtc._view;
+      var controller = testWebrtc._controller;
+
+      sinon.assert.calledWith(testWebrtc._binder.on,
+                              view.list,
+                              'click',
+                              '.' + COMMON.EXPAND_CLASS,
+                              controller.toggleExpand);
+
+      sinon.assert.calledWith(testWebrtc._binder.on,
+                              expandContainerEl,
+                              'click',
+                              '.' + COMMON.EXPAND_CLASS,
+                              controller.toggleExpand);
+
+      sinon.assert.calledWith(testWebrtc._binder.on,
+                              expandContainerEl,
+                              'click',
+                              '.' + COMMON.LEAVE_CLASS,
+                              controller.toggleJoin);
+
+      sinon.assert.calledWith(testWebrtc._binder.on,
+                              expandContainerEl,
+                              'click',
+                              '.' + COMMON.MUTE_CLASS,
+                              controller.toggleMute);
+
+      sinon.assert.calledWith(testWebrtc._binder.on,
+                              expandContainerEl,
                               'click',
                               '.' + COMMON.PAUSE_CLASS,
                               controller.togglePause);
@@ -224,11 +284,9 @@ describe('WebRTC', function() {
 
   describe('#destroy', function() {
     beforeEach(function(done) {
-      expandContainer = document.createElement('div');
-
       var options = {
         room: fakeRoom,
-        expandContainer: expandContainer
+        expandContainer: expandContainerEl
       };
 
       testWebrtc = new WebRTC(options);
@@ -292,7 +350,7 @@ describe('WebRTC', function() {
         sinon.assert.calledWith(testWebrtc._binder.off,
                                 view.list,
                                 'click',
-                                '.' + COMMON.AUDIO_CLASS,
+                                '.' + COMMON.MUTE_CLASS,
                                 controller.toggleMute);
 
         sinon.assert.calledWith(testWebrtc._binder.off,
@@ -301,6 +359,47 @@ describe('WebRTC', function() {
                                 '.' + COMMON.PAUSE_CLASS,
                                 controller.togglePause);
       });
+    });
+
+    it('Unbinds the expanded container DOM events', function() {
+      testWebrtc.destroy(function(err) {
+        if (err) {
+          throw err;
+        }
+      });
+
+      var view = testWebrtc._view;
+      var controller = testWebrtc._controller;
+
+      sinon.assert.calledWith(testWebrtc._binder.off,
+                              view.list,
+                              'click',
+                              '.' + COMMON.EXPAND_CLASS,
+                              controller.toggleExpand);
+
+      sinon.assert.calledWith(testWebrtc._binder.off,
+                              expandContainerEl,
+                              'click',
+                              '.' + COMMON.EXPAND_CLASS,
+                              controller.toggleExpand);
+
+      sinon.assert.calledWith(testWebrtc._binder.off,
+                              expandContainerEl,
+                              'click',
+                              '.' + COMMON.LEAVE_CLASS,
+                              controller.toggleJoin);
+
+      sinon.assert.calledWith(testWebrtc._binder.off,
+                              expandContainerEl,
+                              'click',
+                              '.' + COMMON.MUTE_CLASS,
+                              controller.toggleMute);
+
+      sinon.assert.calledWith(testWebrtc._binder.off,
+                              expandContainerEl,
+                              'click',
+                              '.' + COMMON.PAUSE_CLASS,
+                              controller.togglePause);
     });
   });
 });
