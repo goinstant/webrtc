@@ -229,7 +229,7 @@ Creates the WebRTC instance with customizable options.
 | - `room` is the [Room](../../javascript_api/rooms/index.html).|
 | - `listContainer` is an optional DOM element that, if provided, the WebRTC user list will render in.|
 | - `expandContainer` is an optional DOM element that, if provided, enables the expand user control and renders expanded users in the given container.|
-| - `collapsed` [**default: false**] is a [Boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean) where, if true, the WebRTC widget will be initially rendered collapsed. This option overrides the default behavior of remembering a user's collapse status for initialization.|
+| - `collapsed` [**default: false**] is a [Boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean) where, if true, the WebRTC widget will be initially rendered collapsed.|
 
 ### Example
 
@@ -257,7 +257,7 @@ Creates a new instance of the WebRTC widget
 | callback(errorObject) |
 |:---|
 | Type: [Function](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function) |
-| A callback function that is returned once the webrtc widget has completed being initialized. |
+| A callback function that is called once the webrtc widget has completed being initialized. |
 | - `errorObject` - will be null, unless an error has occurred. |
 
 ### Example
