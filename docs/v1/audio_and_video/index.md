@@ -1,6 +1,6 @@
 # Audio and Video
 
-[Github Link](../audio_and_video/html/webrtc_github.html "include")
+[Github Link](../audio_and_video/static/html/webrtc_github.html "include")
 
 The Video and Audio widget provides a drop-in, back-end free video conferencing
 solution for your app. It's powered by [GoRTC](./gortc.html), our integration
