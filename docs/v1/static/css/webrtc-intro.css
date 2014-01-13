@@ -1,0 +1,44 @@
+.webrtc-intro {
+  margin-top: 1.5em;
+  margin-bottom: 15px;
+  *zoom: 1;
+}
+
+  .webrtc-intro:before, .webrtc-intro:after {
+    content: " ";
+    display: table;
+  }
+
+  .webrtc-intro:after {
+    clear: both;
+  }
+
+.webrtc-intro * {
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+}
+
+.webrtc-intro p {
+  float: left;
+  width: 64%;
+  padding-right: 2em;
+  line-height: 1.5;
+  font-size: 1.15em;
+}
+
+.webrtc-intro div {
+  float: right;
+  width: 36%;
+  padding-right: .5em;
+  padding-bottom: .5em;
+}
+
+.webrtc-intro div .button {
+  width: 254px;
+  max-width: 100%;
+  text-align: center;
+  font-size: 17px;
+  height: auto;
+  margin-top: .5em;
+  line-height: 45px;
+}

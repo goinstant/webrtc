@@ -3,13 +3,18 @@
 ## [WebRTC Widget](https://developers.goinstant.com/v1/widgets/webrtc.html)
 
 The [GoInstant](https://goinstant.com) WebRTC [widget](https://developers.goinstant.com/v1/widgets/index.html)
-provides a drop-in, back-end free, video conferencing solution.
+provides a drop-in, back-end free, video conferencing solution. is makes it
+incredibly easy to get started with WebRTC in your application.
 
 ![WebRTC](webrtc.png)
 
-[Sign up](https://goinstant.com/signup) and build a GoInstant application today.
-You can learn more in our [guides](https://developers.goinstant.com/v1/widgets/guides/index.html),
-and [documentation](https://developers.goinstant.com/v1/widgets/webrtc.html).
+- To use WebRTC, you can [sign up for a free GoInstant account](https://goinstant.com/signup).
+
+- [Read the documentation](https://developers.goinstant.com/v1/widgets/audio_and_video/index.html)
+on how WebRTC works.
+
+- [Check out our demo](http://webrtc.goinstant.com) leveraging the WebRTC widget
+for easy audio/video conferencing.
 
 Have questions? Contact us using [this form](https://goinstant.com/contact) or
 chat with us on IRC. #goinstant on [Freenode](http://freenode.net/).
