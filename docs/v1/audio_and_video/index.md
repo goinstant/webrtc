@@ -4,13 +4,7 @@
 
 [Github Link](html/webrtc_intro.html "include")
 
-You can render it collapsed, specify a container to render it in, and enable
-expanding users into a larger container.
-
-The displayed name for a user comes from the user's `displayName` attribute,
-passed along with their JWT, and set on the key `/users/:id`.
-
-## Feature List
+## Features
 - Join or leave the conference at the user's convenience
 - Pause and resume your video stream at any time
 - Mute and unmute your audio stream at any time
@@ -20,6 +14,10 @@ passed along with their JWT, and set on the key `/users/:id`.
 
 ## Supported Browsers
 The WebRTC widget currently supports the latest versions of FireFox and Chrome.
+
+## User Data
+- The name for a user is pulled from the  `displayName` key on the [userObject](../../javascript_api/users.html)
+- The color for a user is pulled from the `avatarColor` key on the [userObject](../../javascript_api/users.html)
 
 ## Table of Contents
 
@@ -228,7 +226,7 @@ Creates the WebRTC instance with customizable options.
 |:---|
 | Type: [Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object) |
 | An object with the following properties: |
-| - `room` is the [Room](https://developers.goinstant.net/v1/rooms/index.html).|
+| - `room` is the [Room](../../javascript_api/rooms/index.html).|
 | - `listContainer` is an optional DOM element that, if provided, the WebRTC user list will render in.|
 | - `expandContainer` is an optional DOM element that, if provided, enables the expand user control and renders expanded users in the given container.|
 | - `collapsed` [**default: false**] is a [Boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean) where, if true, the WebRTC widget will be initially rendered collapsed. This option overrides the default behavior of remembering a user's collapse status for initialization.|
@@ -297,5 +295,5 @@ webrtc.destroy(function(err) {
 
 ### How do I customize user colors?
 
-See the [colors guide](./guides/colors.html).
+See the [colors guide](../guides/colors.html).
 
