@@ -1,4 +1,4 @@
-# WebRTC
+# Audio and Video
 
 [Github Link](html/webrtc_github.html "include")
 
