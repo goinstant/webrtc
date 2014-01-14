@@ -8,11 +8,6 @@ as the base of our WebRTC widget.
 
 ![WebRTC](webrtc.png)
 
-To use the WebRTC Widget, [sign up for a free GoInstant account](https://goinstant.com/signup).
-You can also learn more in our [documentation](https://developers.goinstant.com/v1/widgets/audio_and_video/index.html).
-And check out the [demo](http://webrtc.goinstant.com) we've built using the
-WebRTC widget -- you can invite friends to join you in a video/audio conference.
-
 - To use WebRTC, you can [sign up for a free GoInstant account](https://goinstant.com/signup).
 
 - [Read the documentation](https://developers.goinstant.com/v1/widgets/audio_and_video/index.html)
