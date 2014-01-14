@@ -2,7 +2,7 @@
   "name": "webrtc",
   "repo": "goinstant/webrtc",
   "description": "The GoInstant Web RTC widget provides a drop-in, back-end free, video conferencing solution.",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "keywords": [
     "GoInstant",
     "widget",
@@ -18,7 +18,7 @@
     "discore/closest": "0.1.2",
     "goinstant/usercache": "v1.0.0",
     "goinstant/colors-common": "v1.0.0",
-    "goinstant/gortc": "v1.1.0"
+    "goinstant/gortc": "v1.2.0"
   },
 
   "development": {

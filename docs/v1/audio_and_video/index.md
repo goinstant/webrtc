@@ -136,6 +136,8 @@ possible to customize.
 If you have not included our CSS file, you do not need to use the `gi-override`
 class when styling the widget.
 
+![css-diagram](../static/images/css-diagrams/webrtc.png)
+
 This stylesheet provides a good starting point for customizing the WebRTC widget.
 
 ```css
