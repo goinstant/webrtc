@@ -3,7 +3,8 @@
 ## [WebRTC Widget](https://developers.goinstant.com/v1/widgets/webrtc.html)
 
 The [GoInstant](https://goinstant.com) WebRTC [widget](https://developers.goinstant.com/v1/widgets/index.html)
-provides a drop-in, back-end free, video conferencing solution.
+provides a drop-in, back-end free, video conferencing solution. We use [GoRTC](https://github.com/goinstant/gortc)
+as the base of our WebRTC widget.
 
 ![WebRTC](webrtc.png)
 
