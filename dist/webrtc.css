@@ -246,7 +246,10 @@
 
         /* Tooltip Contents */
         .gi-webrtc .gi-overlay > .gi-expand:before {
-          content: "Make presenter";
+          content: "Maximize";
+        }
+        .gi-webrtc.gi-expand-container .gi-overlay > .gi-expand:before {
+          content: "Minimize";
         }
         .gi-webrtc .gi-overlay > .gi-pause:before {
           content: "Pause stream";
