@@ -1,5 +1,9 @@
 # WebRTC Changelog
 
+### v1.0.2
+
+- Updated styles with correct retina avatar size
+
 ### v1.0.1
 
 - Updated tooltips for maximizing a user

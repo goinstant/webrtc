@@ -294,7 +294,7 @@
   @media print, (-webkit-min-device-pixel-ratio: 1.25), (min-resolution: 120dpi) {
     .gi-webrtc .gi-color {
       background-image: url("webrtc/./images/sprite@2x.png");
-      background-size: 140px 52px;
+      background-size: 159px 80px;
     }
   }
 

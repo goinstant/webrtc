@@ -1,6 +1,6 @@
 {
   "name": "webrtc",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "The GoInstant Web RTC widget provides a drop-in, back-end free, video conferencing solution.",
   "main": "Gruntfile.js",
   "scripts": {
