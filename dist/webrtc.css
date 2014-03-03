@@ -404,6 +404,17 @@
 }
 
 /*
+   Custom List Container
+   =========================================================================== */
+.gi-webrtc.gi-custom-container {
+  position: absolute;
+}
+
+.gi-webrtc.gi-custom-container .gi-collapse-wrapper {
+  display: none;
+}
+
+/*
    Collapse Toggle
    ========================================================================== */
 

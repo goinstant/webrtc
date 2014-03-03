@@ -1,5 +1,9 @@
 # WebRTC Changelog
 
+### v1.0.3
+
+- Apply default styles to custom list container via a `gi-custom-container` class
+
 ### v1.0.2
 
 - Updated styles with correct retina avatar size

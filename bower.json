@@ -1,7 +1,7 @@
 {
   "name": "goinstant-webrtc",
   "main": "dist/webrtc.js",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "homepage": "https://github.com/goinstant/webrtc",
   "authors": [
     "GoInstant",

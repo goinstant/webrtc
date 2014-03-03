@@ -11228,15 +11228,12 @@ View.prototype.initialize = function() {
   this._addAllUsers();
 
   if (this._listContainer) {
-    this._wrapper.style.position = 'absolute';
-    this._collapseWrapper.style.display = 'none';
-
+    classes(this._wrapper).add(COMMON.CUSTOM_CONTAINER_CLASS);
     this._listContainer.appendChild(this._wrapper);
 
-    return;
+  } else {
+    document.body.appendChild(this._wrapper);
   }
-
-  document.body.appendChild(this._wrapper);
 };
 
 View.prototype._addAllUsers = function() {
