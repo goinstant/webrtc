@@ -107,6 +107,7 @@ describe('Controller', function() {
 
     fakeWidget = {
       _room: fakeRoom,
+      _goRTCOptions: {},
       _userCache: fakeUserCache,
       _localUser: fakeUserCache.getLocalUser(),
       _view: fakeView
