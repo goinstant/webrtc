@@ -166,6 +166,14 @@ describe('WebRTC', function() {
         testWebrtc = new WebRTC({ room: fakeRoom, expandContainer: 'DOM' });
       }, 'WebRTC: expandContainer must be a DOM element');
     });
+
+    it('throws an error if invalid peerConnectionConfig is passed', function() {
+      var cfg = true;
+
+      assert.exception(function() {
+        testWebrtc = new WebRTC({ room: fakeRoom, peerConnectionConfig: cfg});
+      }, 'WebRTC: peerConnectionConfig must be an object');
+    });
   });
 
   describe('#initialize', function() {

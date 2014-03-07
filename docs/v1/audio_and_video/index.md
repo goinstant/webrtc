@@ -232,15 +232,23 @@ Creates the WebRTC instance with customizable options.
 | - `listContainer` is an optional DOM element that, if provided, the WebRTC user list will render in.|
 | - `expandContainer` is an optional DOM element that, if provided, enables the expand user control and renders expanded users in the given container.|
 | - `collapsed` [**default: false**] is a [Boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean) where, if true, the WebRTC widget will be initially rendered collapsed.|
+| - `autoStart` [**default: false**] is a [Boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean) where, if true, the WebRTC widget will automatically prompt users to start sharing their microphone/camera.|
+| - `peerConnectionConfig` [**default: google STUN server**] is an Object containing advanced webrtc connection options. This option can be used to specify STUN/TURN iceServers.|
 
 ### Example
 
 ```js
+var GOOGLE_STUN = 'stun:stun.l.google.com:19302'; // Google's public stun server
+
 var options = {
   room: exampleRoom,
   listContainer: document.getElementById('myListContainer'),
   expandContainer: document.getElementById('myExpandContainer'),
-  collapsed: true
+  collapsed: true,
+  autoStart: true,
+  peerConnectionConfig: {
+    iceServers: [{ url: GOOGLE_STUN }]
+  }
 };
 
 var webrtc = new goinstant.widget.WebRTC(options);
@@ -294,6 +302,29 @@ webrtc.destroy(function(err) {
 ```
 
 ## Related Information
+
+### How do I specify a TURN server with authentication credentials?
+
+Note that this data is being exposed to all clients. Do not include sensitive
+data here for authorizing use of your TURN/STUN servers as it could be used
+maliciously by a third party.
+
+```js
+var CUSTOM_TURN = {
+  url: 'turn:turn.provider.com',
+  username: 'user',
+  credential: 'token'
+};
+
+var options = {
+  room: exampleRoom,
+  peerConnectionConfig: {
+    iceServers: [CUSTOM_TURN]
+  }
+};
+
+var webrtc = new goinstant.widget.WebRTC(options);
+```
 
 ### How do I customize user colors?
 
