@@ -10508,6 +10508,7 @@ var errorMap = {
   INVALID_AUTOSTART: ': autoStart value must be a boolean',
   INVALID_LIST_CONTAINER: ': listContainer must be a DOM element',
   INVALID_EXPAND_CONTAINER: ': expandContainer must be a DOM element',
+  INVALID_PEER_CONN_CFG: ': peerConnectionConfig must be an object',
 
   INVALID_LISTENER: ': Listener was not found or invalid',
   INVALID_EVENT: ': Event was not found or invalid'
@@ -10608,21 +10609,20 @@ var Controller = require('./controller');
  */
 var COMMON = require('./common');
 
-var VALID_OPTIONS = [
-  'room',
-  'listContainer',
-  'expandContainer',
-  'collapsed',
-  'autoStart'
-];
+var GOOGLE_STUN = { url: 'stun:stun.l.google.com:19302' };
 
 var DEFAULT_OPTIONS = {
   room: null,
   listContainer: null,
   expandContainer: null,
   collapsed: false,
-  autoStart: false
+  autoStart: false,
+  peerConnectionConfig: {
+    iceServers: [GOOGLE_STUN]
+  }
 };
+
+var VALID_OPTIONS = _.keys(DEFAULT_OPTIONS);
 
 /**
  * @constructor
@@ -10636,7 +10636,11 @@ function WebRTC(options) {
 
   this._room = this._validatedOptions.room;
   this._expandContainer = this._validatedOptions.expandContainer;
-  this._autoStart = this._validatedOptions.autoStart;
+
+  this._goRTCOptions = {
+    autoStart: this._validatedOptions.autoStart,
+    peerConnectionConfig: this._validatedOptions.peerConnectionConfig
+  };
 
   this._UserCache = UserCache;
   this._binder = binder;
@@ -10794,6 +10798,7 @@ function validateOptions(options) {
   if (!_.isUndefined(options.autoStart) && !_.isBoolean(options.autoStart)) {
     throw errors.create(COMMON.NAME, 'INVALID_AUTOSTART');
   }
+
   if (options.listContainer && !_.isElement(options.listContainer)) {
     throw errors.create(COMMON.NAME, 'INVALID_LIST_CONTAINER');
   }
@@ -10802,6 +10807,11 @@ function validateOptions(options) {
     throw errors.create(COMMON.NAME, 'INVALID_EXPAND_CONTAINER');
   }
 
+  var peerConnCfg = options.peerConnectionConfig;
+
+  if (peerConnCfg && !_.isObject(peerConnCfg)) {
+    throw errors.create(COMMON.NAME, 'INVALID_PEER_CONN_CFG');
+  }
 
   var validoptions = _.defaults(options, DEFAULT_OPTIONS);
 
@@ -10858,7 +10868,9 @@ function Controller(widget) {
   this._paused = false;
   this._expandedId = null;
 
-  this._autoStart = widget._autoStart;
+  this._goRTCOptions = widget._goRTCOptions;
+  this._goRTCOptions.room = this._room;
+
   this._localUser = widget._localUser;
   this._localUserKey = this._room.self();
 
@@ -10884,12 +10896,7 @@ function Controller(widget) {
 }
 
 Controller.prototype.initialize = function() {
-  var options = {
-    room: this._room,
-    autoStart: this._autoStart
-  };
-
-  this._goRTC = new this._GoRTC(options);
+  this._goRTC = new this._GoRTC(this._goRTCOptions);
 
   if (!this._rtcIsBound) {
     this._goRTC.on('localStream', this._addLocalStream);
