@@ -251,7 +251,7 @@ var options = {
   }
 };
 
-var webrtc = new goinstant.widget.WebRTC(options);
+var webrtc = new goinstant.widgets.WebRTC(options);
 ```
 
 ## WebRTC#initialize
@@ -312,7 +312,7 @@ maliciously by a third party.
 ```js
 var CUSTOM_TURN = {
   url: 'turn:turn.provider.com',
-  username: 'user',
+  username: 'identifier',
   credential: 'token'
 };
 
@@ -323,7 +323,7 @@ var options = {
   }
 };
 
-var webrtc = new goinstant.widget.WebRTC(options);
+var webrtc = new goinstant.widgets.WebRTC(options);
 ```
 
 ### How do I customize user colors?
