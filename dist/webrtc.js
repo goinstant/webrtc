@@ -10510,8 +10510,12 @@ var errorMap = {
   INVALID_EXPAND_CONTAINER: ': expandContainer must be a DOM element',
   INVALID_PEER_CONN_CFG: ': peerConnectionConfig must be an object',
 
+  INVALLID_LIST_TEMPLATE: ': listTemplate must be an HTML string',
+  INVALLID_USER_TEMPLATE: ': userTemplate must be an HTML string',
+  INVALLID_LOCAL_USER_TEMPLATE: ': localUserTemplate must be an HTML string',
+
   INVALID_LISTENER: ': Listener was not found or invalid',
-  INVALID_EVENT: ': Event was not found or invalid'
+  INVALID_EVENT: ': Event was not found or invalid',
 };
 
 errors.create = function(method, type) {
@@ -10615,6 +10619,9 @@ var DEFAULT_OPTIONS = {
   room: null,
   listContainer: null,
   expandContainer: null,
+  listTemplate: null,
+  userTemplate: null,
+  localUserTemplate: null,
   collapsed: false,
   autoStart: false,
   peerConnectionConfig: {
@@ -10805,6 +10812,18 @@ function validateOptions(options) {
 
   if (options.expandContainer && !_.isElement(options.expandContainer)) {
     throw errors.create(COMMON.NAME, 'INVALID_EXPAND_CONTAINER');
+  }
+
+  if (options.listTemplate && !_.isString(options.listTemplate)) {
+    throw errors.create(COMMON.NAME, 'INVALID_LIST_TEMPLATE')
+  }
+
+  if (options.userTemplate && !_.isString(options.userTemplate)) {
+    throw errors.create(COMMON.NAME, 'INVALID_USER_TEMPLATE')
+  }
+
+  if (options.localUserTemplate && !_.isString(options.localUserTemplate)) {
+    throw errors.create(COMMON.NAME, 'INVALID_LOCAL_TEMPLATE')
   }
 
   var peerConnCfg = options.peerConnectionConfig;
@@ -11157,9 +11176,9 @@ var closest = require('closest');
 /**
  * templates
  */
-var listTemplate = require('../templates/list-template.html');
-var userTemplate = require('../templates/user-template.html');
-var localUserTemplate = require('../templates/local-user-template.html');
+var defaultListTemplate = require('../templates/list-template.html');
+var defaultUserTemplate = require('../templates/user-template.html');
+var defaultLocalUserTemplate = require('../templates/local-user-template.html');
 
 /**
  * @const
@@ -11170,13 +11189,13 @@ var COMMON = require('./common');
  * @constructor
  */
 function View(widget) {
-  var options = widget._validatedOptions;
+  this.options = widget._validatedOptions;
 
-  this._listContainer = options.listContainer;
-  this.expandContainer = options.expandContainer;
+  this._listContainer = this.options.listContainer;
+  this.expandContainer = this.options.expandContainer;
   this._expandList = null;
 
-  this._collapsed = options.collapsed;
+  this._collapsed = this.options.collapsed;
 
   this._userCache = widget._userCache;
 
@@ -11216,7 +11235,7 @@ View.prototype.initialize = function() {
     classes(this._wrapper).add(COMMON.COLLAPSED_CLASS);
   }
 
-  this._wrapper.innerHTML = listTemplate;
+  this._wrapper.innerHTML = this.options.listTemplate || defaultListTemplate;
 
   this._collapseWrapper = this._wrapper
     .querySelector('.' + COMMON.COLLAPSE_WRAPPER_CLASS);
@@ -11263,15 +11282,16 @@ View.prototype.addUser = function(user) {
     return;
   }
 
-  var template = userTemplate;
-
   var id = user.id;
   var expanded = this._expandedId === id;
   var container = null;
   var userEl;
 
+  var template;
   if (id === this._localUser.id) {
-    template = localUserTemplate;
+    template = this.options.localUserTemplate || defaultLocalUserTemplate;
+  } else {
+    template = this.options.userTemplate || defaultUserTemplate;
   }
 
   userEl = document.createElement('li');
@@ -11288,6 +11308,7 @@ View.prototype.addUser = function(user) {
   userEl.setAttribute(COMMON.DATA_ID, user.id);
   userEl.innerHTML = template;
 
+  console.log(userEl);
   // Hide expand controls
   if (!this.expandContainer) {
     var expandEl = userEl.querySelector('.' + COMMON.EXPAND_CLASS);
@@ -11563,7 +11584,7 @@ require.register("webrtc/templates/list-template.html", function(exports, requir
 module.exports = '<div class="gi-webrtc-centered">\n  <div class="gi-collapse-wrapper">\n    <div class="gi-collapse">\n      <span class="gi-icon"></span>\n    </div>\n  </div>\n  <div class="gi-list-wrapper">\n    <ul class="gi-list"></ul>\n  </div>\n</div>\n';
 });
 require.register("webrtc/templates/user-template.html", function(exports, require, module){
-module.exports = '<div class="gi-stream-wrapper">\n  <div class="gi-overlay">\n    <div class="gi-expand">\n      <span class="gi-icon"></span>\n    </div>\n    <div class="gi-mute">\n      <span class="gi-icon"></span>\n    </div>  </div>\n</div>\n<div class="gi-user-wrapper">\n  <div class="gi-color">\n    <div class="gi-avatar"></div>\n  </div>\n  <span class="gi-name"></span>\n  <div class="gi-audio">\n    <span class="gi-icon"></span>\n  </div>\n</div>\n';
+module.exports = '<div class="gi-stream-wrapper">\n  <div class="gi-overlay">\n    <div class="gi-expand">\n      <span class="gi-icon"></span>\n    </div>\n    <div class="gi-mute">\n      <span class="gi-icon"></span>\n    </div>\n  </div>\n</div>\n<div class="gi-user-wrapper">\n  <div class="gi-color">\n    <div class="gi-avatar"></div>\n  </div>\n  <span class="gi-name"></span>\n  <div class="gi-audio">\n    <span class="gi-icon"></span>\n  </div>\n</div>\n';
 });
 require.register("webrtc/templates/local-user-template.html", function(exports, require, module){
 module.exports = '<div class="gi-stream-wrapper">\n  <div class="gi-overlay">\n    <div class="gi-expand">\n      <span class="gi-icon"></span>\n    </div>\n    <div class="gi-pause">\n      <span class="gi-icon"></span>\n    </div>\n    <div class="gi-mute">\n      <span class="gi-icon"></span>\n    </div>\n    <div class="gi-leave">\n      <span class="gi-icon"></span>\n    </div>\n  </div>\n  <button class="gi-join">\n    <span>\n      <span class="gi-icon"></span>\n    </span>\n    Join the Stream\n  </button>\n</div>\n<div class="gi-user-wrapper">\n  <span class="gi-color"></span>\n  <span class="gi-name"></span>\n  <div class="gi-audio">\n    <span class="gi-icon"></span>\n  </div>\n</div>\n';

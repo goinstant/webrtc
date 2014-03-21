@@ -231,6 +231,10 @@ Creates the WebRTC instance with customizable options.
 | - `room` is the [Room](../../javascript_api/rooms/index.html).|
 | - `listContainer` is an optional DOM element that, if provided, the WebRTC user list will render in.|
 | - `expandContainer` is an optional DOM element that, if provided, enables the expand user control and renders expanded users in the given container.|
+| - `listTemplate` is the HTML template for the list users will render in.|
+| - `userTemplate` is the HTML template for each user.|
+| - `localUserTemplate` is the HTML template for the local user, which is
+handled separately.|
 | - `collapsed` [**default: false**] is a [Boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean) where, if true, the WebRTC widget will be initially rendered collapsed.|
 | - `autoStart` [**default: false**] is a [Boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean) where, if true, the WebRTC widget will automatically prompt users to start sharing their microphone/camera.|
 | - `peerConnectionConfig` [**default: google STUN server**] is an Object containing advanced webrtc connection options. This option can be used to specify STUN/TURN iceServers.|
@@ -330,3 +334,84 @@ var webrtc = new goinstant.widgets.WebRTC(options);
 
 See the [colors guide](../guides/colors.html).
 
+
+### How do I define custom templates?
+
+The widget receives three optional template arguments: `listTemplate`,
+`userTemplate` and `localUserTemplate`. This allows custom HTML to be defined
+instead of the widget's defaults.
+
+This is intended to allow you to add extra markup or classes that your application may
+require, not to remove existing markup. The widget may throw an error in cases
+where it doesn't find certain elements that are required for it to work
+correctly (for example, the `gi-expand` class on
+`userTemplate`). Please be careful about this when overriding templates.
+
+The default markup is as follows:
+
+* listTemplate
+
+    <div class="gi-webrtc-centered">
+      <div class="gi-collapse-wrapper">
+        <div class="gi-collapse">
+        <span class="gi-icon"></span>
+        </div>
+      </div>
+      <div class="gi-list-wrapper">
+        <ul class="gi-list"></ul>
+      </div>
+    </div>
+
+* userTemplate
+
+    <div class="gi-stream-wrapper">
+      <div class="gi-overlay">
+        <div class="gi-expand">
+          <span class="gi-icon"></span>
+        </div>
+        <div class="gi-mute">
+          <span class="gi-icon"></span>
+        </div>
+      </div>
+    </div>
+    <div class="gi-user-wrapper">
+      <div class="gi-color">
+        <div class="gi-avatar"></div>
+      </div>
+      <span class="gi-name"></span>
+      <div class="gi-audio">
+        <span class="gi-icon"></span>
+      </div>
+    </div>
+
+* localUserTemplate
+
+    <div class="gi-stream-wrapper">
+      <div class="gi-overlay">
+        <div class="gi-expand">
+          <span class="gi-icon"></span>
+        </div>
+        <div class="gi-pause">
+          <span class="gi-icon"></span>
+        </div>
+        <div class="gi-mute">
+          <span class="gi-icon"></span>
+        </div>
+        <div class="gi-leave">
+          <span class="gi-icon"></span>
+        </div>
+      </div>
+      <button class="gi-join">
+        <span>
+          <span class="gi-icon"></span>
+        </span>
+        Join the Stream
+      </button>
+    </div>
+    <div class="gi-user-wrapper">
+      <span class="gi-color"></span>
+      <span class="gi-name"></span>
+      <div class="gi-audio">
+        <span class="gi-icon"></span>
+      </div>
+    </div>

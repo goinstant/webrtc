@@ -34,6 +34,7 @@ describe('View', function() {
   var fakeRoom;
 
   var fakeWidget;
+  var fakeWidgetWithTemplates;
   var fakeUserCache;
   var fakeUsers;
   var fakeLocalUser;
@@ -101,6 +102,20 @@ describe('View', function() {
       _validatedOptions: {
         listContainer: null,
         expandContainer: null,
+        collapsed: false
+      }
+    };
+
+    fakeWidgetWithTemplates = {
+      _room: fakeRoom,
+      _userCache: fakeUserCache,
+      _localUser: fakeUserCache.getLocalUser(),
+      _validatedOptions: {
+        listContainer: null,
+        expandContainer: null,
+        listTemplate: '<div class="custom-list-template"><div class="gi-list"></div></div>',
+        userTemplate: '<div class="custom-user-template"><div class="gi-name gi-color gi-expand"></div></div>',
+        localUserTemplate: '<div class="custom-local-user-template"><div class="gi-name gi-color gi-expand"></div></div>',
         collapsed: false
       }
     };
@@ -410,6 +425,38 @@ describe('View', function() {
 
       var expandedList = $(expandContainerEl).find('.' + COMMON.LIST_CLASS);
       assert.equal(expandedList.length, 0);
+    });
+  });
+
+  describe('custom templates', function() {
+    beforeEach(function() {
+      testView = new View(fakeWidgetWithTemplates);
+      testView.initialize();
+    });
+
+    afterEach(function() {
+      testView.destroy();
+    });
+
+    it ('uses a custom listTemplate when one is provided', function() {
+      var wrapper = $('.' + COMMON.WIDGET_CLASS);
+      assert.isTrue(classes(wrapper[0].firstChild).has('custom-list-template'));
+    });
+
+    it ('uses a custom userTemplate when one is provided', function() {
+      testView.addUser(fakeUsers[1]);
+
+      var list = $('.' + COMMON.LIST_CLASS);
+      var firstUser = list.children().eq(1)[0];
+
+      assert.isTrue(classes(firstUser.firstChild).has('custom-user-template'));
+    });
+
+    it ('uses a custom localUserTemplate when one is provided', function() {
+      var list = $('.' + COMMON.LIST_CLASS);
+      var localUser = list.find('.gi-local')[0];
+
+      assert.isTrue(classes(localUser.firstChild).has('custom-local-user-template'));
     });
   });
 });
