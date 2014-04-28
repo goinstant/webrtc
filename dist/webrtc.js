@@ -27,10 +27,14 @@ function require(path, parent, orig) {
   // perform real require()
   // by invoking the module's
   // registered function
-  if (!module.exports) {
-    module.exports = {};
-    module.client = module.component = true;
-    module.call(this, module.exports, require.relative(resolved), module);
+  if (!module._resolving && !module.exports) {
+    var mod = {};
+    mod.exports = {};
+    mod.client = mod.component = true;
+    module._resolving = true;
+    module.call(this, mod.exports, require.relative(resolved), mod);
+    delete module._resolving;
+    module.exports = mod.exports;
   }
 
   return module.exports;
@@ -7352,6 +7356,7 @@ module.exports = function(arr, obj){
   }
   return -1;
 };
+
 });
 require.register("component-emitter/index.js", function(exports, require, module){
 
@@ -8717,6 +8722,7 @@ function match(el, selector) {
   return false;
 }
 
+
 });
 require.register("discore-closest/index.js", function(exports, require, module){
 var matches = require('matches-selector')
@@ -8738,6 +8744,7 @@ module.exports = function (element, selector, checkYoSelf, root) {
       return  
   }
 }
+
 });
 require.register("goinstant-usercache/usercache.js", function(exports, require, module){
 /*jshint browser:true */
@@ -9177,6 +9184,9 @@ var Emitter = require('emitter');
  *        construction if true.
  */
 function GoRTC (opts) {
+  // Fix issue where Chrome + FF fail to communicate
+  opts.enableDataChannels = false;
+
   // Use the WebRTC library underneath.
   this.webrtc = new WebRTC(opts);
 
@@ -11559,6 +11569,16 @@ module.exports = View;
 
 
 
+
+
+
+
+
+
+
+
+
+
 require.register("webrtc/templates/list-template.html", function(exports, require, module){
 module.exports = '<div class="gi-webrtc-centered">\n  <div class="gi-collapse-wrapper">\n    <div class="gi-collapse">\n      <span class="gi-icon"></span>\n    </div>\n  </div>\n  <div class="gi-list-wrapper">\n    <ul class="gi-list"></ul>\n  </div>\n</div>\n';
 });
@@ -11633,7 +11653,7 @@ require.alias("goinstant-gortc/gortc.js", "goinstant-gortc/index.js");
 require.alias("webrtc/index.js", "webrtc/index.js");if (typeof exports == "object") {
   module.exports = require("webrtc");
 } else if (typeof define == "function" && define.amd) {
-  define(function(){ return require("webrtc"); });
+  define([], function(){ return require("webrtc"); });
 } else {
   this[""];this.goinstant = this.goinstant || {};this.goinstant.widgets = this.goinstant.widgets || {};this.goinstant.widgets["WebRTC"] = require("webrtc");
 }})();

@@ -113,7 +113,7 @@
     height: 127px;
     overflow: hidden;
     background-color: #ddd;
-    background-image: url("webrtc/./images/user.png");
+    background-image: url("webrtc/images/user.png");
     background-repeat: no-repeat;
     background-position: 40% center;
     border: 1px solid #CCC;
@@ -130,7 +130,7 @@
 
     /* Audio Only Avatar */
     .gi-webrtc .gi-user.gi-streaming-audio .gi-stream-wrapper {
-      background-image: url("webrtc/./images/user-audio.png");
+      background-image: url("webrtc/images/user-audio.png");
     }
 
     /* Audio Only stream is hidden */
@@ -140,7 +140,7 @@
 
     /* Paused User */
     .gi-webrtc .gi-user.gi-paused .gi-stream-wrapper {
-      background-image: url("webrtc/./images/user-paused.png");
+      background-image: url("webrtc/images/user-paused.png");
     }
     .gi-webrtc .gi-user.gi-local.gi-paused .gi-stream-wrapper {
       background: #222;
@@ -285,7 +285,7 @@
     float: left;
     width: 25px;
     height: 25px;
-    background-image: url("webrtc/./images/sprite.png");
+    background-image: url("webrtc/images/sprite.png");
     background-repeat: no-repeat;
     background-position: -1px 0;
     border-radius: 2px;
@@ -293,7 +293,7 @@
 
   @media print, (-webkit-min-device-pixel-ratio: 1.25), (min-resolution: 120dpi) {
     .gi-webrtc .gi-color {
-      background-image: url("webrtc/./images/sprite@2x.png");
+      background-image: url("webrtc/images/sprite@2x.png");
       background-size: 159px 80px;
     }
   }
@@ -425,7 +425,7 @@
   width: 100%;
   height: 7px;
   border-radius: 3px 0 0 0;
-  background: url("webrtc/./images/transparent.png");
+  background: url("webrtc/images/transparent.png");
   background: rgba(0,0,0,.7);
 }
 
@@ -437,7 +437,7 @@
     top: -23px;
     right: 0;
     padding: 7px 0 0 0;
-    background: url("webrtc/./images/transparent.png");
+    background: url("webrtc/images/transparent.png");
     background: rgba(0,0,0,.7);
     border-radius: 3px 3px 0 0;
     cursor: pointer;
@@ -466,13 +466,13 @@
   display: inline-block;
   width: 16px;
   height: 16px;
-  background-image: url("webrtc/./images/sprite.png");
+  background-image: url("webrtc/images/sprite.png");
   background-repeat: no-repeat;
 }
 
 @media print, (-webkit-min-device-pixel-ratio: 1.25), (min-resolution: 120dpi) {
   .gi-webrtc .gi-icon {
-    background-image: url("webrtc/./images/sprite@2x.png");
+    background-image: url("webrtc/images/sprite@2x.png");
     background-size: 159px 80px;
   }
 }

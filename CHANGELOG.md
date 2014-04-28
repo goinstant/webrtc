@@ -1,5 +1,9 @@
 # WebRTC Changelog
 
+### v1.0.5
+
+- Update version of gortc
+
 ### v1.0.4
 
 - Added peerConnectionConfig option for specifying iceServers
