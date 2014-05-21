@@ -149,12 +149,6 @@ describe('WebRTC', function() {
       }, 'WebRTC: collapsed value must be a boolean');
     });
 
-    it('throws an error if invalid autoStart option is passed', function() {
-      assert.exception(function() {
-        testWebrtc = new WebRTC({ room: fakeRoom, autoStart: null });
-      }, 'WebRTC: autoStart value must be a boolean');
-    });
-
     it('throws an error if invalid listContainer is passed', function() {
       assert.exception(function() {
         testWebrtc = new WebRTC({ room: fakeRoom, listContainer: 'DOM' });
@@ -167,12 +161,44 @@ describe('WebRTC', function() {
       }, 'WebRTC: expandContainer must be a DOM element');
     });
 
-    it('throws an error if invalid peerConnectionConfig is passed', function() {
+    it('throws an error if invalid gortcOptions is passed', function() {
       var cfg = true;
 
       assert.exception(function() {
-        testWebrtc = new WebRTC({ room: fakeRoom, peerConnectionConfig: cfg});
-      }, 'WebRTC: peerConnectionConfig must be an object');
+        testWebrtc = new WebRTC({ room: fakeRoom, gortcOptions: cfg});
+      }, 'WebRTC: gortcOptions must be an object');
+    });
+
+    it('accepts gortcOptions', function() {
+      testWebrtc = new WebRTC({
+        room: fakeRoom,
+        gortcOptions: {
+          autoStart: true,
+          peerConnectionConfig: {
+            iceServers: 'test'
+          }
+        }
+      });
+
+      var opts = testWebrtc._validatedOptions.gortcOptions;
+
+      assert.equal(opts.autoStart, true);
+      assert.equal(opts.peerConnectionConfig.iceServers, 'test');
+    });
+
+    it('accepts deprecated options', function() {
+      testWebrtc = new WebRTC({
+        room: fakeRoom,
+        autoStart: true,
+        peerConnectionConfig: {
+          iceServers: 'test'
+        }
+      });
+
+      var opts = testWebrtc._validatedOptions.gortcOptions;
+
+      assert.equal(opts.autoStart, true);
+      assert.equal(opts.peerConnectionConfig.iceServers, 'test');
     });
   });
 
@@ -204,7 +230,6 @@ describe('WebRTC', function() {
     it ('Initializes the WebRTC widget successfully', function() {
       sinon.assert.calledOnce(testWebrtc.initialize);
     });
-
 
     it('Registers listeners to userCache events', function() {
       var userCacheEvents = {
@@ -250,8 +275,6 @@ describe('WebRTC', function() {
                               'click',
                               '.' + COMMON.PAUSE_CLASS,
                               controller.togglePause);
-
-
     });
 
     it('Registers listeners to expanded container DOM events', function() {

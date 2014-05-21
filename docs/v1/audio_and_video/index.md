@@ -232,8 +232,7 @@ Creates the WebRTC instance with customizable options.
 | - `listContainer` is an optional DOM element that, if provided, the WebRTC user list will render in.|
 | - `expandContainer` is an optional DOM element that, if provided, enables the expand user control and renders expanded users in the given container.|
 | - `collapsed` [**default: false**] is a [Boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean) where, if true, the WebRTC widget will be initially rendered collapsed.|
-| - `autoStart` [**default: false**] is a [Boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean) where, if true, the WebRTC widget will automatically prompt users to start sharing their microphone/camera.|
-| - `peerConnectionConfig` [**default: google STUN server**] is an Object containing advanced webrtc connection options. This option can be used to specify STUN/TURN iceServers.|
+| - `gortcOptions` is an [Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object), which contains any options that are to be passed to [GoRTC](./gortc.html). |
 
 ### Example
 
@@ -245,9 +244,11 @@ var options = {
   listContainer: document.getElementById('myListContainer'),
   expandContainer: document.getElementById('myExpandContainer'),
   collapsed: true,
-  autoStart: true,
-  peerConnectionConfig: {
-    iceServers: [{ url: GOOGLE_STUN }]
+  gortcOptions: {
+    autoStart: true,
+    peerConnectionConfig: {
+      iceServers: [{ url: GOOGLE_STUN }]
+    }
   }
 };
 
@@ -318,8 +319,10 @@ var CUSTOM_TURN = {
 
 var options = {
   room: exampleRoom,
-  peerConnectionConfig: {
-    iceServers: [CUSTOM_TURN]
+  gortcOptions: {
+    peerConnectionConfig: {
+      iceServers: [CUSTOM_TURN]
+    }
   }
 };
 
