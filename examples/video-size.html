@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>GoInstant: WebRTC Example: auto start</title>
+    <title>GoInstant: WebRTC Example: expand Container</title>
 
     <script src="https://cdn.goinstant.net/v1/platform.min.js"></script>
     <script src="https://cdn.goinstant.net/widgets/user-colors/latest/user-colors.min.js"></script>
@@ -26,7 +26,11 @@
         height: 400px;
         position: absolute;
         top: 70px;
-        right: 0px;
+      }
+
+      .myContainer .gi-stream-wrapper {
+        width: 400px !important;
+        height: 400px !important;
       }
     </style>
   </head>
@@ -42,10 +46,19 @@
 
         var options = {
           room: room,
-          expandContainer: $('.myContainer')[0],
           gortcOptions: {
-            autoStart: true
-          }
+            autoStart: true,
+            video: {
+              mandatory: {
+                minWidth: 170,
+                minHeight: 127,
+                maxWidth: 170,
+                maxHeight: 127,
+                maxFrameRate: 5
+              }
+            }
+          },
+          expandContainer: $('.myContainer')[0]
         };
 
         var userColors = new UserColors({ room: room });
@@ -70,7 +83,7 @@
 
         var config = {
           name: 'WebRTC',
-          desc: 'autoStart option',
+          desc: 'expandContainer option',
           test: widgetTest
         };
 
