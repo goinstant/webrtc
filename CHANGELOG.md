@@ -1,5 +1,9 @@
 # WebRTC Changelog
 
+### v1.0.7
+
+- Expose options for GoRTC
+
 ### v1.0.5
 
 - Update version of gortc

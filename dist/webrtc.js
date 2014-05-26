@@ -7356,7 +7356,6 @@ module.exports = function(arr, obj){
   }
   return -1;
 };
-
 });
 require.register("component-emitter/index.js", function(exports, require, module){
 
@@ -8722,7 +8721,6 @@ function match(el, selector) {
   return false;
 }
 
-
 });
 require.register("discore-closest/index.js", function(exports, require, module){
 var matches = require('matches-selector')
@@ -8744,7 +8742,6 @@ module.exports = function (element, selector, checkYoSelf, root) {
       return  
   }
 }
-
 });
 require.register("goinstant-usercache/usercache.js", function(exports, require, module){
 /*jshint browser:true */
@@ -10518,7 +10515,7 @@ var errorMap = {
   INVALID_AUTOSTART: ': autoStart value must be a boolean',
   INVALID_LIST_CONTAINER: ': listContainer must be a DOM element',
   INVALID_EXPAND_CONTAINER: ': expandContainer must be a DOM element',
-  INVALID_PEER_CONN_CFG: ': peerConnectionConfig must be an object',
+  INVALID_GORTC_OPTIONS: ': gortcOptions must be an object',
 
   INVALID_LISTENER: ': Listener was not found or invalid',
   INVALID_EVENT: ': Event was not found or invalid'
@@ -10626,9 +10623,13 @@ var DEFAULT_OPTIONS = {
   listContainer: null,
   expandContainer: null,
   collapsed: false,
-  autoStart: false,
-  peerConnectionConfig: {
-    iceServers: [GOOGLE_STUN]
+  autoStart: null, // Deprecated
+  peerConnectionConfig: null, // Deprecated
+  gortcOptions: {
+    autoStart: false,
+    peerConnectionConfig: {
+      iceServers: [GOOGLE_STUN]
+    }
   }
 };
 
@@ -10646,11 +10647,6 @@ function WebRTC(options) {
 
   this._room = this._validatedOptions.room;
   this._expandContainer = this._validatedOptions.expandContainer;
-
-  this._goRTCOptions = {
-    autoStart: this._validatedOptions.autoStart,
-    peerConnectionConfig: this._validatedOptions.peerConnectionConfig
-  };
 
   this._UserCache = UserCache;
   this._binder = binder;
@@ -10759,7 +10755,6 @@ WebRTC.prototype.destroy = function(cb) {
                         '.' + COMMON.MUTE_CLASS, this._controller.toggleMute);
       this._binder.off(this._view.expandContainer, 'click',
                         '.' + COMMON.PAUSE_CLASS, this._controller.togglePause);
-
     }
 
     this._domIsBound = false;
@@ -10805,10 +10800,6 @@ function validateOptions(options) {
     throw errors.create(COMMON.NAME, 'INVALID_COLLAPSED');
   }
 
-  if (!_.isUndefined(options.autoStart) && !_.isBoolean(options.autoStart)) {
-    throw errors.create(COMMON.NAME, 'INVALID_AUTOSTART');
-  }
-
   if (options.listContainer && !_.isElement(options.listContainer)) {
     throw errors.create(COMMON.NAME, 'INVALID_LIST_CONTAINER');
   }
@@ -10817,15 +10808,22 @@ function validateOptions(options) {
     throw errors.create(COMMON.NAME, 'INVALID_EXPAND_CONTAINER');
   }
 
-  var peerConnCfg = options.peerConnectionConfig;
-
-  if (peerConnCfg && !_.isObject(peerConnCfg)) {
-    throw errors.create(COMMON.NAME, 'INVALID_PEER_CONN_CFG');
+  if (options.gortcOptions && !_.isObject(options.gortcOptions)) {
+    throw errors.create(COMMON.NAME, 'INVALID_GORTC_OPTIONS');
   }
 
-  var validoptions = _.defaults(options, DEFAULT_OPTIONS);
+  var validOptions = _.defaults(options, DEFAULT_OPTIONS);
 
-  return validoptions;
+  // Handle deprecated options, moved into gortcOptions
+  validOptions.gortcOptions.autoStart = _.isBoolean(options.autoStart) ?
+    options.autoStart : validOptions.gortcOptions.autoStart;
+
+  validOptions.gortcOptions.peerConnectionConfig =
+    _.isObject(options.peerConnectionConfig) ?
+      options.peerConnectionConfig :
+      validOptions.gortcOptions.peerConnectionConfig;
+
+  return validOptions;
 }
 
 /**
@@ -10878,7 +10876,7 @@ function Controller(widget) {
   this._paused = false;
   this._expandedId = null;
 
-  this._goRTCOptions = widget._goRTCOptions;
+  this._goRTCOptions = widget._validatedOptions.gortcOptions;
   this._goRTCOptions.room = this._room;
 
   this._localUser = widget._localUser;
