@@ -15,7 +15,7 @@
     "component/emitter": "1.1.0",
     "component/classes": "1.1.4",
     "caolan/async": "f01b3992fbe7aa2f4881152143608ad666aea1cc",
-    "discore/closest": "0.1.2",
+    "tootallnate/closest": "0.1.2",
     "goinstant/usercache": "v1.0.0",
     "goinstant/colors-common": "v1.0.0",
     "goinstant/gortc": "v1.2.1"
